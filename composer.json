@@ -18,8 +18,5 @@
 		"psr-0" : {
 			"Puzzle\\" : "lib"
 		}
-	},
-	"bin" : [
-		"bin/fire"
-	]
+	}
 }
