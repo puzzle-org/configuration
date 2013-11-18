@@ -16,7 +16,8 @@ class Yaml extends AbstractConfiguration
         
         if($configurationFilesDirectory === null)
         {
-            $configurationFilesDirectory = __DIR__ . '/../../../config/';
+            // if no directory is provided, act as if we were in a composer filetree
+            $configurationFilesDirectory = __DIR__ . '/../../../../../config/';
         }
         
         $this->directory = rtrim($configurationFilesDirectory, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
