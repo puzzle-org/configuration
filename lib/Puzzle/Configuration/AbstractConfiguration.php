@@ -28,7 +28,7 @@ abstract class AbstractConfiguration implements \Puzzle\Configuration
     {
         if(!$this->exists($fqn))
         {
-            throw new NotFoundException($fqn);
+            throw new Exceptions\NotFound($fqn);
         }
     
         $value = $this->getValue($fqn);
