@@ -2,7 +2,7 @@
 
 <project name="Puzzle" default="build">
  <target name="build"
-   depends="prepare,composer,lint,phploc,pdepend,phpmd,phpcs,phpcpd,phpdoc,phpcb"/>
+   depends="prepare,composer,lint,phploc,pdepend,phpmd,phpcs,phpcpd,phpdoc,phpcb,phpunit"/>
 
  <target name="clean" description="Cleanup build artifacts">
   <delete dir="${basedir}/build/api"/>
@@ -96,7 +96,7 @@
  <target name="phpunit" description="Run unit tests with PHPUnit">
   <exec executable="vendor/bin/phpunit" dir="${basedir}" failonerror="true">
    <arg value="-c" />
-   <arg path="phpunit.xml.dist" />
+   <arg path="phpunit.xml" />
    <arg value="--coverage-html" />
    <arg path="${basedir}/build/coverage" />
    <arg value="--coverage-clover" />
