@@ -21,6 +21,10 @@
  </target>
     
  <target name="composer" description="Update dependencies">
+  <exec executable="wget" failonerror="true">
+   <arg value="-nc" />
+   <arg value="http://getcomposer.org/composer.phar" />
+  </exec> 	
   <exec executable="php" dir="${basedir}">
    <arg value="composer.phar" />
    <arg value="install" />
