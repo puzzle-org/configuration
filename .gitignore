@@ -7,3 +7,6 @@
 vendor/
 composer.phar
 composer.lock
+
+# Logs
+php_errors.log
