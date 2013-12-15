@@ -42,7 +42,6 @@ abstract class AbstractConfiguration implements \Puzzle\Configuration
      * @example myConfigFilenameWithoutExtension/myRootConfig/myGroup/myVariable
      *
      * @param string $fqn
-     * @param int $maxToken
      *
      * @throws \Puzzle\Configuration\Exceptions\InvalidIdentifier
      *
