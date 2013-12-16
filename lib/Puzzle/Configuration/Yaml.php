@@ -2,25 +2,21 @@
 
 namespace Puzzle\Configuration;
 
+use Gaufrette\Filesystem;
+use Gaufrette\Exception\FileNotFound;
+
 class Yaml extends AbstractConfiguration
 {
     private
         $cache,
-        $directory;
+        $storage;
         
-    public function __construct($configurationFilesDirectory = null)
+    public function __construct(Filesystem $configurationFilesStorage)
     {
         parent::__construct();
         
         $this->cache = array();
-        
-        if($configurationFilesDirectory === null)
-        {
-            // if no directory is provided, act as if we were in a composer filetree
-            $configurationFilesDirectory = __DIR__ . '/../../../../../config/';
-        }
-        
-        $this->directory = rtrim($configurationFilesDirectory, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        $this->storage = $configurationFilesStorage;
     }
     
     public function exists($fqn)
@@ -33,7 +29,14 @@ class Yaml extends AbstractConfiguration
         $keys = $this->parseDsn($fqn);
         $filename = array_shift($keys);
 
-        $config = $this->getYaml($filename);
+        try
+        {
+            $config = $this->getYaml($filename);
+        }
+        catch(FileNotFound $e)
+        {
+            return null;
+        }
         
         while(! empty($keys))
         {
@@ -54,8 +57,8 @@ class Yaml extends AbstractConfiguration
     {
         if(! isset($this->cache[$alias]))
         {
-            $filename = $this->computeFilename($alias);
-            $this->cache[$alias] = \Symfony\Component\Yaml\Yaml::parse($filename);
+            $fileContent = $this->storage->read($this->computeFilename($alias));
+            $this->cache[$alias] = \Symfony\Component\Yaml\Yaml::parse($fileContent);
         }
         
         return $this->cache[$alias];
@@ -63,6 +66,6 @@ class Yaml extends AbstractConfiguration
 
     private function computeFilename($alias)
     {
-        return $this->directory . $alias . '.yml';
+        return $alias . '.yml';
     }
 }
