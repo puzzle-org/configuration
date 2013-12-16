@@ -43,8 +43,6 @@ abstract class AbstractConfiguration implements \Puzzle\Configuration
      *
      * @param string $fqn
      *
-     * @throws \Puzzle\Configuration\Exceptions\InvalidIdentifier
-     *
      * @return multitype:
      */
     protected function parseDsn($fqn)
