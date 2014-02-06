@@ -4,7 +4,6 @@ namespace Puzzle\Configuration;
 
 abstract class AbstractConfiguration implements \Puzzle\Configuration
 {
-    abstract public function exists($fqn);
     abstract protected function getValue($fqn);
 
     public function __construct()
