@@ -7,7 +7,7 @@ Hide configuration implementation behind common interface
 QA
 --
 
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/94083ab1-1613-46c1-b380-ec575926ae39/big.png)](https://insight.sensiolabs.com/projects/94083ab1-1613-46c1-b380-ec575926ae39)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/635b04b7-6238-4200-8526-72766767fd22/big.png)](https://insight.sensiolabs.com/projects/635b04b7-6238-4200-8526-72766767fd22)
 
 Service | Result
 --- | ---
