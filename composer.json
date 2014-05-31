@@ -22,5 +22,6 @@
 		"psr-0" : {
 			"Puzzle\\" : "lib"
 		}
-	}
+	},
+	"license" : "MIT"
 }
