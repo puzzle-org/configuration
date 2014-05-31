@@ -38,21 +38,9 @@ class Yaml extends AbstractConfiguration
             return null;
         }
         
-        while(! empty($keys))
-        {
-            $key = array_shift($keys);
-            
-            if(!isset($config[$key]))
-            {
-                return null;
-            }
-            
-            $config = $config[$key];
-        }
-        
-        return $config;
+        return $this->readValue($keys, $config);
     }
-
+    
     private function getYaml($alias)
     {
         if(! isset($this->cache[$alias]))
@@ -67,5 +55,22 @@ class Yaml extends AbstractConfiguration
     private function computeFilename($alias)
     {
         return $alias . '.yml';
+    }
+    
+    private function readValue(array $keys, array $config)
+    {
+        while(! empty($keys))
+        {
+            $key = array_shift($keys);
+            
+            if(!isset($config[$key]))
+            {
+                return null;
+            }
+            
+            $config = $config[$key];
+        }
+        
+        return $config;
     }
 }
