@@ -1,8 +1,13 @@
 Puzzle-configuration
 ====================
 
-Hide configuration implementation behind common interface
+Hide configuration implementation behind common interface. 
 
+Some advantages :
+* Application does not depend upon configuration implementation details 
+* Application does not have to manage filesystem issues (for filesystem based implementations)
+* Application can be easily tested, even for configuration edge cases (missing or wrong configuration values)
+* Define configuration as a service in your dependency injection container
 
 QA
 --
@@ -26,3 +31,69 @@ Use composer :
     }
 }
 ```
+
+Documentation
+-------------
+
+### Configuration as service ###
+
+
+```php
+<?php
+
+class Example
+{
+    public function __construct(Puzzle\Configuration $config)
+    {
+        $threshold = $config->read('app/detection/threshold');
+    }
+}
+```
+
+The way the configuration value is read depends on the chosen implementation.
+
+Up to now, 2 implementations are provided :
+* InMemory (for unit testing purpose)
+* Yaml (based on Symfony/Yaml). 
+
+For YAML one, ```'app/detection/threshold'``` means ```detection[thresold]``` in app.yml file. 
+When you instanciate YamlConfiguration object, you need to provide where yaml files can be found : 
+
+```php
+<?php
+
+$fileSystem = new Gaufrette\Filesystem(
+    new Local('path/to/yaml/files/root/dir')
+);
+$config = new Puzzle\Configuration\Yaml($fileSystem);
+
+$example = new Example($config);
+
+```
+
+```yaml
+# app.yml 
+
+detection:
+  threshold: 3
+```
+
+### Default values ###
+
+```php
+<?php
+
+$configuration->read('a/b/c', 'default value if a/b/c does not exist');
+```
+
+But if ```a/b/c``` is required :
+
+```php
+<?php
+
+// will throw an exception if a/b/c does not exist
+$configuration->readRequired('a/b/c');
+```
+
+
+
