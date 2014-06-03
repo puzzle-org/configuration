@@ -53,7 +53,7 @@ class Example
 The way the configuration value is read depends on the chosen implementation.
 
 Up to now, 2 implementations are provided :
-* InMemory (for unit testing purpose)
+* Memory (for unit testing purpose)
 * Yaml (based on Symfony/Yaml). 
 
 For YAML one, ```'app/detection/threshold'``` means ```detection[thresold]``` in app.yml file. 
@@ -83,7 +83,7 @@ detection:
 ```php
 <?php
 
-$config = new Puzzle\Configuration\InMemory(array(
+$config = new Puzzle\Configuration\Memory(array(
     'app/detection/threshold' => 2
 );
 
