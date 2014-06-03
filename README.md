@@ -78,6 +78,19 @@ detection:
   threshold: 3
 ```
 
+### Unit testing ###
+
+```php
+<?php
+
+$config = new Puzzle\Configuration\InMemory(array(
+    'app/detection/threshold' => 2
+);
+
+$example = new ExampleTest($config);
+
+```
+
 ### Default values ###
 
 ```php
