@@ -19,7 +19,7 @@ Service | Result
 **Jenkins** | [![Build Status](http://jenkins.deboo.fr/job/Puzzle-configuration/badge/icon)](http://jenkins.deboo.fr/job/Puzzle-configuration/)
 **Travis CI** (PHP 5.4 + 5.5) | [![Build Status](https://travis-ci.org/Niktux/puzzle-configuration.png?branch=master)](https://travis-ci.org/Niktux/puzzle-configuration)
 **Scrutinizer** | [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/Niktux/puzzle-configuration/badges/quality-score.png?s=595d09c72316b5e706c3f78fb00807bc6b1515f1)](https://scrutinizer-ci.com/g/Niktux/puzzle-configuration/)
-**Packagist** | [![Latest Stable Version](https://poser.pugx.org/puzzle/configuration/v/stable.png)](https://packagist.org/packages/puzzle/configuration)
+**Packagist** | [![Latest Stable Version](https://poser.pugx.org/puzzle/configuration/v/stable.png)](https://packagist.org/packages/puzzle/configuration) [![Total Downloads](https://poser.pugx.org/puzzle/configuration/downloads.svg)](https://packagist.org/packages/puzzle/configuration)
 
 Installation
 ------------
