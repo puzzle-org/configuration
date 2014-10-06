@@ -59,7 +59,7 @@ abstract class AbstractConfiguration implements \Puzzle\Configuration
      *
      * @param string $fqn
      *
-     * @return multitype:
+     * @return array
      */
     protected function parseDsn($fqn)
     {
