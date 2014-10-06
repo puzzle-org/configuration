@@ -1,6 +1,7 @@
 <?php
 
 use Puzzle\Configuration\AbstractConfiguration;
+
 class AbstractConfigurationTest extends PHPUnit_Framework_TestCase
 {
     public function testJoin()
