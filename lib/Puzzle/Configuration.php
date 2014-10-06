@@ -29,6 +29,19 @@ interface Configuration
     public function readRequired($fqn);
     
     /**
+     * Read value for the first existing given key. Throw exception if not found
+     * 
+     * @param string $fqn
+     * @param ...
+     * @param string $fqn
+     *
+     * @return mixed
+     *
+     * @throws \Puzzle\Configuration\Exceptions\NotFound
+     */
+    public function readFirstExisting(/* ... */);
+    
+    /**
      * Check value existence.
      *
      * @param string $fqn
@@ -36,4 +49,5 @@ interface Configuration
      * @return boolean
      */
     public function exists($fqn);
+    
 }

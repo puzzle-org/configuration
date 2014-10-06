@@ -74,4 +74,41 @@ abstract class AbstractTestCase extends PHPUnit_Framework_TestCase
             array('g/h/i'),
         );
     }
+    
+    /**
+     * @dataProvider providerTestReadFirstExisting
+     */
+    public function testReadFirstExisting($expected, array $parameters)
+    {
+        $value = call_user_func_array(array($this->config, 'readFirstExisting'), $parameters);
+        
+        $this->assertSame($expected, $value);
+    }
+    
+    public function providerTestReadFirstExisting()
+    {
+        return array(
+            array('abc', array('a/b/c', 'a/b/d',)),
+            array('abd', array('a/b/d', 'a/b/c',)),
+            array('def', array('x/y/z', 'd/e/f',)),
+            array('bbc', array('x/y/z', 'b/b/c', 'a/b/c')),
+            array('abc', array('x/y/z', 'x/y/z', 'a/b/c')),
+            array('abc', array('x/y/z', 'a/b/x', 'a/b/c')),
+        );
+    }
+    
+    public function testReadFirstExistingNominal()
+    {
+        $value = $this->config->readFirstExisting('x/y/z', 'x/y', 'z/yx/', 'b/b/c', 'too/late');
+        
+        $this->assertSame('bbc', $value);
+    }
+    
+    /**
+     * @expectedException Puzzle\Configuration\Exceptions\NotFound
+     */
+    public function testReadFirstExistingNotFound()
+    {
+        $this->config->readFirstExisting('x/y/z', 'x/y', 'z/yx/');
+    }
 }

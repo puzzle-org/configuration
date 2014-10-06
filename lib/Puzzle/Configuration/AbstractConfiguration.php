@@ -35,6 +35,23 @@ abstract class AbstractConfiguration implements \Puzzle\Configuration
         return $value;
     }
     
+    public function readFirstExisting()
+    {
+        $keys = func_get_args();
+        
+        foreach($keys as $fqn)
+        {
+            if($this->exists($fqn))
+            {
+                return $this->getValue($fqn);
+            }
+        }
+        
+        throw new Exceptions\NotFound(
+            sprintf('[%s]', implode(', ', $keys))
+        );
+    }
+    
     /**
      * Parse the idenfication name of variable or group
      *
