@@ -49,5 +49,4 @@ interface Configuration
      * @return boolean
      */
     public function exists($fqn);
-    
 }
