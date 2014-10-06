@@ -108,5 +108,14 @@ But if ```a/b/c``` is required :
 $configuration->readRequired('a/b/c');
 ```
 
+### Fallback strategy ###
 
+```php
+<?php
+
+// Since 1.5.0
+// returns value associated to first existing key
+// will throw an exception if none exist
+$configuration->readFirstExisting('a/b/c', 'd/e/f', 'x/y/z');
+```
 
