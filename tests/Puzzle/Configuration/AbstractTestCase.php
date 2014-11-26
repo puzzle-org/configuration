@@ -111,4 +111,12 @@ abstract class AbstractTestCase extends PHPUnit_Framework_TestCase
     {
         $this->config->readFirstExisting('x/y/z', 'x/y', 'z/yx/');
     }
+
+    /**
+     * @expectedException Puzzle\Configuration\Exceptions\NotFound
+     */
+    public function testReadFirstExistingWithoutAnyArgument()
+    {
+        $this->config->readFirstExisting();
+    }
 }
