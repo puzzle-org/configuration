@@ -1,8 +1,8 @@
 <?php
 
-use Puzzle\Configuration\AbstractConfiguration;
+namespace Puzzle\Configuration;
 
-class AbstractConfigurationTest extends PHPUnit_Framework_TestCase
+class AbstractConfigurationTest extends \PHPUnit_Framework_TestCase
 {
     public function testJoin()
     {
@@ -10,7 +10,7 @@ class AbstractConfigurationTest extends PHPUnit_Framework_TestCase
         $this->assertSame('a/b', AbstractConfiguration::join('a', 'b'));
         $this->assertSame('a/b/c', AbstractConfiguration::join('a', 'b', 'c'));
         $this->assertSame('a/b/c/d', AbstractConfiguration::join('a', 'b', 'c', 'd'));
-        
+
         $this->assertSame('foo/bar/baz/test', AbstractConfiguration::join('foo', 'bar', 'baz', 'test'));
     }
 }
