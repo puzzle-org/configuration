@@ -27,7 +27,7 @@ Use composer :
 ```json
 {
     "require": {
-		    "puzzle/configuration" : "~1.4"
+            "puzzle/configuration" : "~1.6"
     }
 }
 ```
@@ -119,3 +119,45 @@ $configuration->readRequired('a/b/c');
 $configuration->readFirstExisting('a/b/c', 'd/e/f', 'x/y/z');
 ```
 
+### Override configuration ###
+
+If you need some configuration to (partially or not) override another one :
+```php
+<?php
+
+// Since 1.6.0
+$defaultFileSystem = new Gaufrette\Filesystem(
+    new Local('path/to/yaml/files/root/dir')
+);
+$defaultConfig = new Puzzle\Configuration\Yaml($defaultFileSystem);
+
+$fileSystem = new Gaufrette\Filesystem(
+    new Local('pth/to/another/config/files')
+);
+$localConfig = new Puzzle\Configuration\Yaml($fileSystem);
+
+$config = new Puzzle\Configuration\Stacked();
+$config->overrideBy($defaultConfig)
+       ->overrideBy($localConfig);
+
+// values will be read in localConfig first. They will be read in default config only if they don't exist in local one.
+```
+
+Another exemple : 
+```php
+<?php
+
+$fileSystem = new Gaufrette\Filesystem(
+    new Local('path/to/yaml/files/root/dir')
+);
+$defaultConfig = new Puzzle\Configuration\Yaml($fileSystem);
+
+$overrideConfig = new Puzzle\Configuration\Memory(array(
+    'app/detection/threshold' => 2
+);
+
+$config = new Puzzle\Configuration\Stacked();
+$config->overrideBy($defaultConfig)
+       ->overrideBy($overrideConfig);
+```
+You can as many as configuration instances you want in the stack. The last inserted is the most prioritary.
