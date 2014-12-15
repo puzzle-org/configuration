@@ -132,7 +132,7 @@ $defaultFileSystem = new Gaufrette\Filesystem(
 $defaultConfig = new Puzzle\Configuration\Yaml($defaultFileSystem);
 
 $fileSystem = new Gaufrette\Filesystem(
-    new Local('pth/to/another/config/files')
+    new Local('path/to/another/config/files')
 );
 $localConfig = new Puzzle\Configuration\Yaml($fileSystem);
 
@@ -143,7 +143,7 @@ $config->overrideBy($defaultConfig)
 // values will be read in localConfig first. They will be read in default config only if they don't exist in local one.
 ```
 
-Another exemple : 
+Another example : 
 ```php
 <?php
 
@@ -160,4 +160,4 @@ $config = new Puzzle\Configuration\Stacked();
 $config->overrideBy($defaultConfig)
        ->overrideBy($overrideConfig);
 ```
-You can as many as configuration instances you want in the stack. The last inserted is the most prioritary.
+You can add as many as configuration instances you want in the stack. The last inserted is the most prioritary.
