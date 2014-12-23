@@ -35,7 +35,7 @@ Use composer :
 Documentation
 -------------
 
-### Configuration as service ###
+### Configuration as a service ###
 
 
 ```php
