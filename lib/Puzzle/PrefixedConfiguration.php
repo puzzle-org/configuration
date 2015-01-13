@@ -20,7 +20,7 @@ class PrefixedConfiguration implements Configuration
     {
         if($this->isValidPrefix($prefix))
         {
-            $this->prefix = trim($prefix, self::SEPARATOR);
+            $this->prefix = $this->trimPrefix($prefix);
         }
 
         return true;
@@ -30,12 +30,17 @@ class PrefixedConfiguration implements Configuration
     {
         if(is_string($prefix))
         {
-            $prefix = trim($prefix, self::SEPARATOR);
+            $prefix = $this->trimPrefix($prefix);
 
             return (! empty($prefix));
         }
 
         return false;
+    }
+
+    private function trimPrefix($prefix)
+    {
+        return trim($prefix, self::SEPARATOR);
     }
 
     public function read($fqn, $defaultValue = null)
