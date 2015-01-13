@@ -76,8 +76,7 @@ class PrefixedConfigurationTest extends \PHPUnit_Framework_TestCase
      */
     public function testReadWithInvalidPrefix($prefix)
     {
-        $prefixed = new PrefixedConfiguration($this->configuration);
-        $prefixed->setPrefix($prefix);
+        $prefixed = new PrefixedConfiguration($this->configuration, $prefix);
 
         foreach(array('a/b/c', 'c') as $key)
         {
@@ -110,8 +109,7 @@ class PrefixedConfigurationTest extends \PHPUnit_Framework_TestCase
      */
     public function testReadRequired($key, $expectedkey)
     {
-        $prefixed = new PrefixedConfiguration($this->configuration);
-        $prefixed->setPrefix('a/b');
+        $prefixed = new PrefixedConfiguration($this->configuration, 'a/b');
 
         $this->assertSame(
             $this->configuration->readRequired($expectedkey),
@@ -133,8 +131,7 @@ class PrefixedConfigurationTest extends \PHPUnit_Framework_TestCase
      */
     public function testReadRequiredWithInvalidFQN($fqn)
     {
-        $prefixed = new PrefixedConfiguration($this->configuration);
-        $prefixed->setPrefix('a/b');
+        $prefixed = new PrefixedConfiguration($this->configuration, 'a/b');
 
         $prefixed->readRequired($fqn);
     }
@@ -149,8 +146,7 @@ class PrefixedConfigurationTest extends \PHPUnit_Framework_TestCase
 
     public function testReadFirstExisting()
     {
-        $prefixed = new PrefixedConfiguration($this->configuration);
-        $prefixed->setPrefix('a/b');
+        $prefixed = new PrefixedConfiguration($this->configuration, 'a/b');
 
         $this->assertSame(
             $this->configuration->readFirstExisting('a/b/g', 'a/b/f', 'a/b/e', 'a/b/d', 'a/b/c', 'a/b/b', 'a/b/a'),
@@ -173,8 +169,7 @@ class PrefixedConfigurationTest extends \PHPUnit_Framework_TestCase
      */
     public function testReadFirstExistingWithInvalidFqn()
     {
-        $prefixed = new PrefixedConfiguration($this->configuration);
-        $prefixed->setPrefix('a/b');
+        $prefixed = new PrefixedConfiguration($this->configuration, 'a/b');
 
         $prefixed->readFirstExisting('x', 'y', 'z');
     }

@@ -10,9 +10,9 @@ class PrefixedConfiguration implements Configuration
         $prefix,
         $configuration;
 
-    public function __construct(Configuration $configuration)
+    public function __construct(Configuration $configuration, $prefix = null)
     {
-        $this->prefix = null;
+        $this->setPrefix($prefix);
         $this->configuration = $configuration;
     }
 
