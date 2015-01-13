@@ -23,7 +23,7 @@ class PrefixedConfiguration implements Configuration
             $this->prefix = $this->trimPrefix($prefix);
         }
 
-        return true;
+        return $this;
     }
 
     private function isValidPrefix($prefix)
