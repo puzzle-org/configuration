@@ -35,6 +35,34 @@ abstract class AbstractTestCase extends PHPUnit_Framework_TestCase
             array('d/e/f', 'def'),
             array('a/bb/c', self::DEFAULT_VALUE),
             array('g/h/i', self::DEFAULT_VALUE),
+            array('empty/someKey', self::DEFAULT_VALUE),
+            array('commentsOnly/someKey', self::DEFAULT_VALUE),
+            array('notExisting', self::DEFAULT_VALUE),
+        );
+    }
+
+    /**
+     * @dataProvider providerTestReadWithoutDefaultValue
+     */
+    public function testReadWithoutDefaultValue($fqn, $expected)
+    {
+        $value = $this->config->read($fqn);
+
+        $this->assertSame($expected, $value);
+    }
+
+    public function providerTestReadWithoutDefaultValue()
+    {
+        return array(
+            array('a/b/c', 'abc'),
+            array('a/b/d', 'abd'),
+            array('b/b/c', 'bbc'),
+            array('d/e/f', 'def'),
+            array('a/bb/c', null),
+            array('g/h/i', null),
+            array('empty/someKey', null),
+            array('commentsOnly/someKey', null),
+            array('notExisting', null),
         );
     }
 
@@ -72,6 +100,9 @@ abstract class AbstractTestCase extends PHPUnit_Framework_TestCase
         return array(
             array('a/bb/c'),
             array('g/h/i'),
+            array('empty/someKey', self::DEFAULT_VALUE),
+            array('commentsOnly/someKey', self::DEFAULT_VALUE),
+            array('notExisting', self::DEFAULT_VALUE),
         );
     }
 

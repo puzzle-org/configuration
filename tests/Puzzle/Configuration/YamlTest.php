@@ -30,6 +30,18 @@ e:
 YAML;
         $adapter->write('d.yml', $content);
 
+        $content = '';
+        $adapter->write('empty.yml', $content);
+
+        $content = <<<YAML
+# This is a file with only comments in it
+# Like this one
+# Right here
+# Did you see ?
+
+YAML;
+        $adapter->write('commentsOnly.yml', $content);
+
         return new Yaml(new Filesystem($adapter));
     }
 }

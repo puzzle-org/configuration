@@ -46,10 +46,21 @@ class Yaml extends AbstractConfiguration
         if(! isset($this->cache[$alias]))
         {
             $fileContent = $this->storage->read($this->computeFilename($alias));
-            $this->cache[$alias] = \Symfony\Component\Yaml\Yaml::parse($fileContent);
+            $this->cache[$alias] = $this->parseYaml($fileContent);
         }
         
         return $this->cache[$alias];
+    }
+
+    private function parseYaml($content)
+    {
+        $decodedYaml = \Symfony\Component\Yaml\Yaml::parse($content);
+        if(! is_array($decodedYaml))
+        {
+            $decodedYaml = array();
+        }
+
+        return $decodedYaml;
     }
 
     private function computeFilename($alias)
