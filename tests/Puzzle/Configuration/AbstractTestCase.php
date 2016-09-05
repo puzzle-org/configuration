@@ -42,6 +42,31 @@ abstract class AbstractTestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @dataProvider providerTestReadWithoutDefaultValue
+     */
+    public function testReadWithoutDefaultValue($fqn, $expected)
+    {
+        $value = $this->config->read($fqn);
+
+        $this->assertSame($expected, $value);
+    }
+
+    public function providerTestReadWithoutDefaultValue()
+    {
+        return array(
+            array('a/b/c', 'abc'),
+            array('a/b/d', 'abd'),
+            array('b/b/c', 'bbc'),
+            array('d/e/f', 'def'),
+            array('a/bb/c', null),
+            array('g/h/i', null),
+            array('empty/someKey', null),
+            array('commentsOnly/someKey', null),
+            array('notExisting', null),
+        );
+    }
+
+    /**
      * @dataProvider providerTestReadRequired
      */
     public function testReadRequired($fqn, $expected)
