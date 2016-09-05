@@ -35,6 +35,9 @@ abstract class AbstractTestCase extends PHPUnit_Framework_TestCase
             array('d/e/f', 'def'),
             array('a/bb/c', self::DEFAULT_VALUE),
             array('g/h/i', self::DEFAULT_VALUE),
+            array('empty/someKey', self::DEFAULT_VALUE),
+            array('commentsOnly/someKey', self::DEFAULT_VALUE),
+            array('notExisting', self::DEFAULT_VALUE),
         );
     }
 
@@ -72,6 +75,9 @@ abstract class AbstractTestCase extends PHPUnit_Framework_TestCase
         return array(
             array('a/bb/c'),
             array('g/h/i'),
+            array('empty/someKey', self::DEFAULT_VALUE),
+            array('commentsOnly/someKey', self::DEFAULT_VALUE),
+            array('notExisting', self::DEFAULT_VALUE),
         );
     }
 
