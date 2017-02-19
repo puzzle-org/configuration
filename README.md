@@ -26,7 +26,7 @@ Use composer :
 ```json
 {
     "require": {
-            "puzzle/configuration" : "~1.7"
+            "puzzle/configuration" : "~1.8"
     }
 }
 ```
@@ -160,3 +160,13 @@ $config->overrideBy($defaultConfig)
        ->overrideBy($overrideConfig);
 ```
 You can add as many as configuration instances you want in the stack. The last inserted is the most prioritary.
+
+If you want to add the least prioritary, use the ```addBase()``` method :
+```php
+<?php
+
+// Since 1.8.0
+$config = new Puzzle\Configuration\Stacked();
+$config->overrideBy($overrideConfig)
+       ->addBase($defaultConfig);
+```

@@ -48,4 +48,11 @@ class Stacked extends AbstractConfiguration
 
         return $this;
     }
+
+    public function addBase(Configuration $configuration)
+    {
+        $this->stack->add(0, $configuration);
+
+        return $this;
+    }
 }
