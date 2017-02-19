@@ -3,8 +3,9 @@
 namespace Puzzle\Configuration;
 
 use Puzzle\Configuration;
+use Puzzle\ConfigurationSystem;
 
-class Stacked extends AbstractConfiguration
+class Stacked extends AbstractConfiguration implements ConfigurationSystem
 {
     private
         $stack;
