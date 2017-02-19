@@ -16,7 +16,7 @@ QA
 
 Service | Result
 --- | ---
-**Travis CI** (PHP 5.4 .. 7.1) | [![Build Status](https://travis-ci.org/puzzle-org/configuration.png?branch=master)](https://travis-ci.org/puzzle-org/configuration)
+**Travis CI** (PHP 5.5 .. 7.1) | [![Build Status](https://travis-ci.org/puzzle-org/configuration.png?branch=master)](https://travis-ci.org/puzzle-org/configuration)
 **Scrutinizer** | [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/Niktux/puzzle-configuration/badges/quality-score.png?s=595d09c72316b5e706c3f78fb00807bc6b1515f1)](https://scrutinizer-ci.com/g/Niktux/puzzle-configuration/)
 **Packagist** | [![Latest Stable Version](https://poser.pugx.org/puzzle/configuration/v/stable.png)](https://packagist.org/packages/puzzle/configuration) [![Total Downloads](https://poser.pugx.org/puzzle/configuration/downloads.svg)](https://packagist.org/packages/puzzle/configuration)
 
@@ -26,7 +26,7 @@ Use composer :
 ```json
 {
     "require": {
-            "puzzle/configuration" : "~1.8"
+            "puzzle/configuration" : "~2.0"
     }
 }
 ```
@@ -165,7 +165,7 @@ If you want to add the least prioritary, use the ```addBase()``` method :
 ```php
 <?php
 
-// Since 1.8.0
+// Since 2.0.0
 $config = new Puzzle\Configuration\Stacked();
 $config->overrideBy($overrideConfig)
        ->addBase($defaultConfig);
@@ -199,3 +199,10 @@ $config = new Puzzle\PrefixedConfiguration($config, "logger/$loggerName");
 $filename = $config->readRequired('filename');
 $verbosity = $config->readRequired('verbosity');
 ```
+
+Changelog
+---------
+
+**1.x -> 2.x**
+
+ - Drop php 5.4 support. Minimal version is 5.5.0
