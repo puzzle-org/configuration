@@ -170,3 +170,32 @@ $config = new Puzzle\Configuration\Stacked();
 $config->overrideBy($overrideConfig)
        ->addBase($defaultConfig);
 ```
+
+### Prefixed configuration ###
+
+You can use automatic prefix decorator ```PrefixedConfiguration```. It can be useful for "namespace like" configurations such as loggers or multiple databases ones.
+
+```yaml
+# logger.yml 
+
+app:
+  filename: app.log
+  verbosity: INFO
+users:
+  filename: users.log
+  verbosity: WARNING
+```
+
+```php
+<?php
+
+// Since 1.7.0
+$fileSystem = new Gaufrette\Filesystem(
+    new Local('path/to/yaml/files/root/dir')
+);
+$config = new Puzzle\Configuration\Yaml($fileSystem);
+$config = new Puzzle\PrefixedConfiguration($config, "logger/$loggerName");
+
+$filename = $config->readRequired('filename');
+$verbosity = $config->readRequired('verbosity');
+```
