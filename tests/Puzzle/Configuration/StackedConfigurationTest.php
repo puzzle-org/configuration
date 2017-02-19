@@ -75,9 +75,9 @@ class StackedConfigurationTest extends \AbstractTestCase
     public function providerTestAddBase()
     {
         $cfg1 = new Memory(array('a' => 'a1', 'b' => 'b1', 'c' => 'c1'));
-        $cfg2 = new Memory(array('a' => 'a2', 'b' => 'b2'));
-        $cfg3 = new Memory(array('a' => 'a3'));
-        $cfg4 = new Memory(array('c' => 'c4', 'd' => 'd4'));
+        $cfg2 = new Memory(array('a' => 'a2', 'b' => 'b2', 'x' => 'x2'));
+        $cfg3 = new Memory(array('a' => 'a3', 'x' => 'x3', 'y' => 'y3'));
+        $cfg4 = new Memory(array('c' => 'c4', 'd' => 'd4', 'y' => 'y4'));
         $cfg5 = new Memory(array('b' => 'b5', 'd' => 'd5'));
 
         $emptyStack = new Stacked();
@@ -92,10 +92,10 @@ class StackedConfigurationTest extends \AbstractTestCase
             'empty' => array($emptyStack, array('a' => 'noVal', 'b' => 'noVal', 'c' => 'noVal', 'd' => 'noVal')),
             '1'     => array($stack1,     array('a' => 'a1', 'b' => 'b1', 'c' => 'c1', 'd' => 'noVal')),
             '12'    => array($stack12,    array('a' => 'a1', 'b' => 'b1', 'c' => 'c1', 'd' => 'noVal')),
-            '123'   => array($stack123,   array('a' => 'a1', 'b' => 'b1', 'c' => 'c1', 'd' => 'noVal')),
-            '1234'  => array($stack1234,  array('a' => 'a1', 'b' => 'b1', 'c' => 'c1', 'd' => 'd4')),
+            '123'   => array($stack123,   array('a' => 'a1', 'b' => 'b1', 'c' => 'c1', 'd' => 'noVal', 'x' => 'x2')),
+            '1234'  => array($stack1234,  array('a' => 'a1', 'b' => 'b1', 'c' => 'c1', 'd' => 'd4', 'x' => 'x2', 'y' => 'y3')),
             '21'    => array($stack21,    array('a' => 'a2', 'b' => 'b2', 'c' => 'c1', 'd' => 'noVal')),
-            '12345' => array($stack12345, array('a' => 'a1', 'b' => 'b1', 'c' => 'c1', 'd' => 'd4')),
+            '12345' => array($stack12345, array('a' => 'a1', 'b' => 'b1', 'c' => 'c1', 'd' => 'd4', 'x' => 'x2', 'y' => 'y3')),
         );
     }
 

@@ -52,7 +52,7 @@ class Stacked extends AbstractConfiguration implements ConfigurationSystem
 
     public function addBase(Configuration $configuration)
     {
-        $this->stack->add(0, $configuration);
+        $this->stack->unshift($configuration);
 
         return $this;
     }
