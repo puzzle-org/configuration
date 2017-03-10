@@ -26,8 +26,6 @@ class Stacked extends AbstractConfiguration implements ConfigurationSystem
                 return $config->getValue($fqn);
             }
         }
-
-        throw new Exceptions\NotFound($fqn);
     }
 
     public function exists($fqn)
