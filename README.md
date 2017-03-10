@@ -17,7 +17,8 @@ QA
 Service | Result
 --- | ---
 **Travis CI** (PHP 5.5 .. 7.1) | [![Build Status](https://travis-ci.org/puzzle-org/configuration.png?branch=master)](https://travis-ci.org/puzzle-org/configuration)
-**Scrutinizer** | [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/Niktux/puzzle-configuration/badges/quality-score.png?s=595d09c72316b5e706c3f78fb00807bc6b1515f1)](https://scrutinizer-ci.com/g/Niktux/puzzle-configuration/)
+**Scrutinizer** | [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/puzzle-org/configuration/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/puzzle-org/configuration/?branch=master)
+**Codecov** | [![codecov](https://codecov.io/gh/puzzle-org/configuration/branch/master/graph/badge.svg)](https://codecov.io/gh/puzzle-org/configuration)
 **Packagist** | [![Latest Stable Version](https://poser.pugx.org/puzzle/configuration/v/stable.png)](https://packagist.org/packages/puzzle/configuration) [![Total Downloads](https://poser.pugx.org/puzzle/configuration/downloads.svg)](https://packagist.org/packages/puzzle/configuration)
 
 Installation
