@@ -16,7 +16,7 @@ QA
 
 Service | Result
 --- | ---
-**Travis CI** (PHP 5.5 .. 7.1) | [![Build Status](https://travis-ci.org/puzzle-org/configuration.png?branch=master)](https://travis-ci.org/puzzle-org/configuration)
+**Travis CI** (PHP 5.6 .. 7.1) | [![Build Status](https://travis-ci.org/puzzle-org/configuration.png?branch=master)](https://travis-ci.org/puzzle-org/configuration)
 **Scrutinizer** | [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/puzzle-org/configuration/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/puzzle-org/configuration/?branch=master)
 **Code coverage** | [![codecov](https://codecov.io/gh/puzzle-org/configuration/branch/master/graph/badge.svg)](https://codecov.io/gh/puzzle-org/configuration)
 **Packagist** | [![Latest Stable Version](https://poser.pugx.org/puzzle/configuration/v/stable.png)](https://packagist.org/packages/puzzle/configuration) [![Total Downloads](https://poser.pugx.org/puzzle/configuration/downloads.svg)](https://packagist.org/packages/puzzle/configuration)
