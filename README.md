@@ -204,6 +204,10 @@ $verbosity = $config->readRequired('verbosity');
 Changelog
 ---------
 
+**2.x --> 3.x**
+
+ - Drop php 5.5 support. Minimal version is 5.6.0
+ 
 **1.x -> 2.x**
 
  - Drop php 5.4 support. Minimal version is 5.5.0
