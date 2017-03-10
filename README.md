@@ -1,4 +1,4 @@
-Puzzle-configuration ![PHP >= 5.5](https://img.shields.io/badge/php-%3E%3D%205.5-blue.svg)
+Puzzle-configuration ![PHP >= 5.6](https://img.shields.io/badge/php-%3E%3D%205.6-blue.svg)
 ====================
 
 Hide configuration implementation behind common interface. 
