@@ -11,18 +11,21 @@ phpunit = docker run -it --rm --name phpunit \
 	                 ${IMAGE_NAME} \
 	                 vendor/bin/phpunit $1 $(CLI_ARGS)
 
-phpunit: vendor/bin/phpunit create-phpunit-image
+phpunit: vendor/bin/phpunit create-phpunit-image ## Run unit tests
 	$(call phpunit, )
 
-phpunit-coverage: vendor/bin/phpunit create-phpunit-image
+phpunit-dox: vendor/bin/phpunit create-phpunit-image
+	$(call phpunit, --testdox)
+
+phpunit-coverage: vendor/bin/phpunit create-phpunit-image ## Run unit tests with coverage report
 	$(call phpunit, --coverage-html=coverage/)
 
 vendor/bin/phpunit: composer-install
 
-create-phpunit-image:
+create-phpunit-image: docker/images/phpunit/Dockerfile
 	docker build -q -t ${IMAGE_NAME} docker/images/phpunit/
 
 clean-phpunit-image:
 	docker rmi ${IMAGE_NAME}
 
-.PHONY: phpunit create-phpunit-image clean-phpunit-image
+.PHONY: phpunit phpunit-dox phpunit-coverage create-phpunit-image clean-phpunit-image

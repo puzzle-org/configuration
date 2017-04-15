@@ -1,15 +1,30 @@
-# Eclipse files
-.settings/
-.buildpath
-.project
-
+#================================================
 # Composer files
-vendor/
+#================================================
 composer.phar
 composer.lock
+vendor/
 
-# Logs
-php_errors.log
+#================================================
+# Eclipse files
+#================================================
+.project
+.buildpath
+.settings/
 
+#================================================
 # Code coverage report
+#================================================
 coverage/
+
+#================================================
+# Whalephant files
+#================================================
+docker/images/phpunit/Dockerfile
+docker/images/phpunit/php.ini
+whalephant
+
+#================================================
+# Logs
+#================================================
+php_errors.log

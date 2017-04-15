@@ -1,4 +1,4 @@
-HOST_SOURCE_PATH=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
+HOST_SOURCE_PATH=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
 USER_ID=$(shell id -u)
 GROUP_ID=$(shell id -g)
@@ -11,29 +11,22 @@ ifneq (,$(filter $(firstword $(MAKECMDGOALS)),composer phpunit))
     $(eval $(CLI_ARGS):;@:)
 endif
 
-COMPOSER_ARGS=
-ifeq (composer, $(firstword $(MAKECMDGOALS)))
-    ifneq (,$(filter install update,$(CLI_ARGS)))
-        COMPOSER_ARGS=--ignore-platform-reqs
-    endif
-endif
+#------------------------------------------------------------------------------
+# Includes
+#------------------------------------------------------------------------------
 
-composer: composer.phar
-	php composer.phar $(CLI_ARGS) $(COMPOSER_ARGS)
+include makefiles/composer.mk
+include makefiles/whalephant.mk
+include makefiles/phpunit.mk
 
-composer-install: composer.phar
-	php composer.phar install --ignore-platform-reqs
+#------------------------------------------------------------------------------
+# Help
+#------------------------------------------------------------------------------
+.DEFAULT_GOAL := help
 
-composer.phar:
-	curl -sS https://getcomposer.org/installer | php
+help:
+	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-25s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
-clean: remove-deps
-	rm -f composer.lock
-	rm -f composer.phar
+clean-all: clean clean-whalephant clean-phpunit-dockerfile clean-phpunit-image ## Clean all generated artefacts
 
-remove-deps:
-	rm -rf vendor
-
--include phpunit.mk
-
-.PHONY: composer composer-install clean remove-deps
+.PHONY: help clean-all

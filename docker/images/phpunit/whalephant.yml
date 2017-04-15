@@ -1,0 +1,7 @@
+name: puzzle-configuration
+php:
+    version: 5.6
+extensions:
+    - xdebug
+ini:
+    - "error_reporting = E_ALL;"
