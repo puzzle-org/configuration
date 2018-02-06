@@ -27,7 +27,7 @@ Use composer :
 ```json
 {
     "require": {
-            "puzzle/configuration" : "~2.0"
+            "puzzle/configuration" : "~3.1"
     }
 }
 ```
