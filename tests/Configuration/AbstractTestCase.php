@@ -5,7 +5,7 @@ abstract class AbstractTestCase extends PHPUnit_Framework_TestCase
     const
         DEFAULT_VALUE = 'default';
 
-    private
+    protected
         $config;
 
     abstract protected function setUpConfigurationObject();

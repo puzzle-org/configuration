@@ -27,7 +27,5 @@ class Memory extends AbstractConfiguration
         {
             return $this->values[$fqn];
         }
-
-
     }
 }
