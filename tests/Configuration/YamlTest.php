@@ -30,6 +30,12 @@ YAML;
         $adapter->write('b.yml', $content);
 
         $content = <<<YAML
+b:
+  c: fakeValue
+YAML;
+        $adapter->write('b.yml-fake', $content);
+
+        $content = <<<YAML
 e:
   f: def
 YAML;

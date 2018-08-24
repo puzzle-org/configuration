@@ -11,6 +11,7 @@ class AbstractConfigurationTest extends TestCase
     public function testJoin(): void
     {
         $this->assertSame('a', AbstractConfiguration::join('a'));
+        $this->assertSame('a/b', AbstractConfiguration::join('', 'a', '', 'b', ''));
         $this->assertSame('a/b', AbstractConfiguration::join('a', 'b'));
         $this->assertSame('a/b/c', AbstractConfiguration::join('a', 'b', 'c'));
         $this->assertSame('a/b/c/d', AbstractConfiguration::join('a', 'b', 'c', 'd'));

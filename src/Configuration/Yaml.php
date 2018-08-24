@@ -9,6 +9,8 @@ use Gaufrette\Exception\FileNotFound;
 
 class Yaml extends AbstractConfiguration
 {
+    private const EXTENSION = 'yml';
+
     private
         $cache,
         $storage;
@@ -67,7 +69,7 @@ class Yaml extends AbstractConfiguration
 
     private function computeFilename(string $alias): string
     {
-        return $alias . '.yml';
+        return $alias . "." . self::EXTENSION;
     }
 
     private function computeAlias(string $filename): string
@@ -96,12 +98,10 @@ class Yaml extends AbstractConfiguration
     {
         $this->populateCache();
 
-        $all = $this->flatten(
+        return $this->flatten(
             // remove empty files
             array_filter($this->cache)
         );
-
-        return $all;
     }
 
     private function populateCache(): void
@@ -110,9 +110,12 @@ class Yaml extends AbstractConfiguration
 
         foreach($files as $file)
         {
-            $this->getYaml(
-                $this->computeAlias($file)
-            );
+            if(pathinfo($file, PATHINFO_EXTENSION) === self::EXTENSION)
+            {
+                $this->getYaml(
+                    $this->computeAlias($file)
+                );
+            }
         }
     }
 }

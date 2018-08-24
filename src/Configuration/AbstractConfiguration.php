@@ -65,7 +65,7 @@ abstract class AbstractConfiguration implements \Puzzle\Configuration
     
     public static function join(string ...$parts): string
     {
-        return implode(self::SEPARATOR, $parts);
+        return implode(self::SEPARATOR, array_filter($parts));
     }
 
     protected function flatten(array $values, string $root = ''): array
