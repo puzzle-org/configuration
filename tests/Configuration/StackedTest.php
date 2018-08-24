@@ -8,21 +8,37 @@ use Puzzle\Configuration;
 
 require_once __DIR__ . '/AbstractTestCase.php';
 
-class StackedConfigurationTest extends AbstractTestCase
+class StackedTest extends AbstractTestCase
 {
     protected function setUpConfigurationObject(): Configuration
     {
         $values = array(
             'a/b/c' => 'abc',
             'a/b/d' => 'abd',
+            'a/x/y' => 'wrong override value for axy',
             'b/b/c' => 'bbc',
             'd/e/f' => 'def',
+            'locale/front' => ['wrong override value for locale/front'],
+            'locale/back' => ['de', 'fr', 'it'],
         );
 
         $config = new Stacked();
         $config->overrideBy(new Memory($values));
+        $config->overrideBy(new Memory([
+            'a/x/y' => 'axy',
+            'locale/front' => ['en', 'fr'],
+        ]));
 
         return $config;
+    }
+
+    /**
+     * @dataProvider providerTestReadArray
+     */
+    public function testReadArray(string $fqn, array $expected): void
+    {
+        // s/o for this impl (use Memory impl)
+        $this->assertTrue(true);
     }
 
     /**

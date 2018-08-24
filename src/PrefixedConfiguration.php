@@ -76,4 +76,9 @@ class PrefixedConfiguration implements Configuration
 
         return $fqn;
     }
+
+    public function all(): iterable
+    {
+        return [];
+    }
 }

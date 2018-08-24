@@ -44,4 +44,9 @@ interface Configuration
      * Check value existence.
      */
     public function exists(string $fqn): bool;
+
+    /**
+     * List all values
+     */
+    public function all(): iterable;
 }

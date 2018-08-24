@@ -18,6 +18,8 @@ class YamlTest extends AbstractTestCase
 b:
   c: abc
   d: abd
+x:
+  y: axy
 YAML;
         $adapter->write('a.yml', $content);
 
@@ -44,6 +46,17 @@ YAML;
 
 YAML;
         $adapter->write('commentsOnly.yml', $content);
+
+        $content = <<<YAML
+front:
+    - en
+    - fr
+back:
+    - de
+    - fr
+    - it
+YAML;
+        $adapter->write('locale.yml', $content);
 
         return new Yaml(new Filesystem($adapter));
     }

@@ -18,6 +18,9 @@ class ArrayMemoryTest extends AbstractTestCase
                     'c' => 'abc',
                     'd' => 'abd',
                 ],
+                'x' => [
+                    'y' => 'axy',
+                ]
             ],
             'b' => [
                 'b' => [
@@ -28,6 +31,10 @@ class ArrayMemoryTest extends AbstractTestCase
                 'e' => [
                     'f' => 'def'
                 ],
+            ],
+            'locale' => [
+                'front' => ['en', 'fr'],
+                'back' => ['de', 'fr', 'it'],
             ],
         ];
 

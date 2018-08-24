@@ -45,6 +45,18 @@ class Stacked extends AbstractConfiguration implements ConfigurationSystem
         return false;
     }
 
+    public function all(): iterable
+    {
+        $all = [];
+
+        foreach($this->stack as $config)
+        {
+            $all += $config->all();
+        }
+
+        return $all;
+    }
+
     public function overrideBy(Configuration $configuration): ConfigurationSystem
     {
         $this->stack->push($configuration);

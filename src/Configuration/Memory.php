@@ -30,4 +30,9 @@ class Memory extends AbstractConfiguration
 
         return null;
     }
+
+    public function all(): iterable
+    {
+        return $this->values;
+    }
 }

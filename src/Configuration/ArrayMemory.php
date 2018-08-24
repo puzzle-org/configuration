@@ -4,8 +4,6 @@ declare(strict_types = 1);
 
 namespace Puzzle\Configuration;
 
-use Puzzle\Configuration;
-
 class ArrayMemory extends AbstractConfiguration
 {
     private
@@ -41,5 +39,10 @@ class ArrayMemory extends AbstractConfiguration
         }
 
         return $config;
+    }
+
+    public function all(): iterable
+    {
+        return $this->flatten($this->values);
     }
 }

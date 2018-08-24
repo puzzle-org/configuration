@@ -16,7 +16,8 @@
         "knplabs/gaufrette" : "~0.2"
     },
     "require-dev" : {
-        "phpunit/phpunit" : "~7.3.0"
+        "phpunit/phpunit" : "~7.3.0",
+        "puzzle/assert": "1.2.0"
     },
     "autoload" : {
         "psr-4" : {

@@ -67,4 +67,43 @@ abstract class AbstractConfiguration implements \Puzzle\Configuration
     {
         return implode(self::SEPARATOR, $parts);
     }
+
+    protected function flatten(array $values, string $root = ''): array
+    {
+        $result = [];
+
+        foreach($values as $key => $value)
+        {
+            $fqn = self::join($root, $key);
+
+            if($this->isHash($value))
+            {
+                $result += $this->flatten($value, $fqn);
+
+                continue;
+            }
+
+            $result[$fqn] = $value;
+        }
+
+        return $result;
+    }
+
+    private function isHash($value): bool
+    {
+        if(! is_array($value))
+        {
+            return false;
+        }
+
+        foreach(array_keys($value) as $key)
+        {
+            if(! is_numeric($key))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

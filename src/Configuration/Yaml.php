@@ -69,6 +69,11 @@ class Yaml extends AbstractConfiguration
     {
         return $alias . '.yml';
     }
+
+    private function computeAlias(string $filename): string
+    {
+        return pathinfo($filename, PATHINFO_FILENAME);
+    }
     
     private function readValue(array $keys, array $config)
     {
@@ -85,5 +90,29 @@ class Yaml extends AbstractConfiguration
         }
         
         return $config;
+    }
+
+    public function all(): iterable
+    {
+        $this->populateCache();
+
+        $all = $this->flatten(
+            // remove empty files
+            array_filter($this->cache)
+        );
+
+        return $all;
+    }
+
+    private function populateCache(): void
+    {
+        $files = $this->storage->keys();
+
+        foreach($files as $file)
+        {
+            $this->getYaml(
+                $this->computeAlias($file)
+            );
+        }
     }
 }
