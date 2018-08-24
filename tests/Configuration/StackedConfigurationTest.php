@@ -1,14 +1,16 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Puzzle\Configuration;
 
 use Puzzle\Configuration;
 
 require_once __DIR__ . '/AbstractTestCase.php';
 
-class StackedConfigurationTest extends \AbstractTestCase
+class StackedConfigurationTest extends AbstractTestCase
 {
-    protected function setUpConfigurationObject()
+    protected function setUpConfigurationObject(): Configuration
     {
         $values = array(
             'a/b/c' => 'abc',
@@ -26,7 +28,7 @@ class StackedConfigurationTest extends \AbstractTestCase
     /**
      * @dataProvider providerTestOverride
      */
-    public function testOverride(Configuration $config, array $expectedValues)
+    public function testOverride(Configuration $config, array $expectedValues): void
     {
         foreach($expectedValues as $key => $expected)
         {
@@ -34,13 +36,13 @@ class StackedConfigurationTest extends \AbstractTestCase
         }
     }
 
-    public function providerTestOverride()
+    public function providerTestOverride(): array
     {
-        $cfg1 = new Memory(array('a' => 'a1', 'b' => 'b1', 'c' => 'c1'));
-        $cfg2 = new Memory(array('a' => 'a2', 'b' => 'b2'));
-        $cfg3 = new Memory(array('a' => 'a3'));
-        $cfg4 = new Memory(array('c' => 'c4', 'd' => 'd4'));
-        $cfg5 = new Memory(array('b' => 'b5', 'd' => 'd5'));
+        $cfg1 = new Memory(['a' => 'a1', 'b' => 'b1', 'c' => 'c1']);
+        $cfg2 = new Memory(['a' => 'a2', 'b' => 'b2']);
+        $cfg3 = new Memory(['a' => 'a3']);
+        $cfg4 = new Memory(['c' => 'c4', 'd' => 'd4']);
+        $cfg5 = new Memory(['b' => 'b5', 'd' => 'd5']);
 
         $emptyStack = new Stacked();
         $stack1     = (new Stacked())->overrideBy($cfg1);
@@ -50,27 +52,27 @@ class StackedConfigurationTest extends \AbstractTestCase
         $stack21    = (new Stacked())->overrideBy($cfg2)->overrideBy($cfg1);
         $stack12345 = (new Stacked())->overrideBy($stack1234)->overrideBy($cfg5);
 
-        return array(
-            'empty' => array($emptyStack, array('a' => 'noVal', 'b' => 'noVal', 'c' => 'noVal', 'd' => 'noVal')),
-            '1'     => array($stack1,     array('a' => 'a1', 'b' => 'b1', 'c' => 'c1', 'd' => 'noVal')),
-            '12'    => array($stack12,    array('a' => 'a2', 'b' => 'b2', 'c' => 'c1', 'd' => 'noVal')),
-            '123'   => array($stack123,   array('a' => 'a3', 'b' => 'b2', 'c' => 'c1', 'd' => 'noVal')),
-            '1234'  => array($stack1234,  array('a' => 'a3', 'b' => 'b2', 'c' => 'c4', 'd' => 'd4')),
-            '21'    => array($stack21,    array('a' => 'a1', 'b' => 'b1', 'c' => 'c1', 'd' => 'noVal')),
-            '12345' => array($stack12345, array('a' => 'a3', 'b' => 'b5', 'c' => 'c4', 'd' => 'd5')),
-        );
+        return [
+            'empty' => [$emptyStack, ['a' => 'noVal', 'b' => 'noVal', 'c' => 'noVal', 'd' => 'noVal']],
+            '1'     => [$stack1, ['a' => 'a1', 'b' => 'b1', 'c' => 'c1', 'd' => 'noVal']],
+            '12'    => [$stack12, ['a' => 'a2', 'b' => 'b2', 'c' => 'c1', 'd' => 'noVal']],
+            '123'   => [$stack123, ['a' => 'a3', 'b' => 'b2', 'c' => 'c1', 'd' => 'noVal']],
+            '1234'  => [$stack1234, ['a' => 'a3', 'b' => 'b2', 'c' => 'c4', 'd' => 'd4']],
+            '21'    => [$stack21, ['a' => 'a1', 'b' => 'b1', 'c' => 'c1', 'd' => 'noVal']],
+            '12345' => [$stack12345, ['a' => 'a3', 'b' => 'b5', 'c' => 'c4', 'd' => 'd5']],
+        ];
     }
 
     /**
      * @dataProvider providerTestAddBase
      */
-     public function testAddBase($configKey, array $expectedValues)
+     public function testAddBase(string $configKey, array $expectedValues): void
     {
-        $cfg1 = new Memory(array('a' => 'a1', 'b' => 'b1', 'c' => 'c1'));
-        $cfg2 = new Memory(array('a' => 'a2', 'b' => 'b2', 'x' => 'x2'));
-        $cfg3 = new Memory(array('a' => 'a3', 'x' => 'x3', 'y' => 'y3'));
-        $cfg4 = new Memory(array('c' => 'c4', 'd' => 'd4', 'y' => 'y4'));
-        $cfg5 = new Memory(array('b' => 'b5', 'd' => 'd5'));
+        $cfg1 = new Memory(['a' => 'a1', 'b' => 'b1', 'c' => 'c1']);
+        $cfg2 = new Memory(['a' => 'a2', 'b' => 'b2', 'x' => 'x2']);
+        $cfg3 = new Memory(['a' => 'a3', 'x' => 'x3', 'y' => 'y3']);
+        $cfg4 = new Memory(['c' => 'c4', 'd' => 'd4', 'y' => 'y4']);
+        $cfg5 = new Memory(['b' => 'b5', 'd' => 'd5']);
 
         $stacks = [
             'empty' => new Stacked(),
@@ -90,61 +92,60 @@ class StackedConfigurationTest extends \AbstractTestCase
         }
     }
 
-    public function providerTestAddBase()
+    public function providerTestAddBase(): array
     {
-
-        return array(
-            'empty' => array('empty', array('a' => 'noVal', 'b' => 'noVal', 'c' => 'noVal', 'd' => 'noVal')),
-            '1'     => array('1',     array('a' => 'a1', 'b' => 'b1', 'c' => 'c1', 'd' => 'noVal')),
-            '12'    => array('12',    array('a' => 'a1', 'b' => 'b1', 'c' => 'c1', 'd' => 'noVal')),
-            '123'   => array('123',   array('a' => 'a1', 'b' => 'b1', 'c' => 'c1', 'd' => 'noVal', 'x' => 'x2')),
-            '1234'  => array('1234',  array('a' => 'a1', 'b' => 'b1', 'c' => 'c1', 'd' => 'd4', 'x' => 'x2', 'y' => 'y3')),
-            '21'    => array('21',    array('a' => 'a2', 'b' => 'b2', 'c' => 'c1', 'd' => 'noVal')),
-            '12345' => array('12345', array('a' => 'a1', 'b' => 'b1', 'c' => 'c1', 'd' => 'd4', 'x' => 'x2', 'y' => 'y3')),
-        );
+        return [
+            'empty' => ['empty', ['a' => 'noVal', 'b' => 'noVal', 'c' => 'noVal', 'd' => 'noVal']],
+            '1'     => ['1', ['a' => 'a1', 'b' => 'b1', 'c' => 'c1', 'd' => 'noVal']],
+            '12'    => ['12', ['a' => 'a1', 'b' => 'b1', 'c' => 'c1', 'd' => 'noVal']],
+            '123'   => ['123', ['a' => 'a1', 'b' => 'b1', 'c' => 'c1', 'd' => 'noVal', 'x' => 'x2']],
+            '1234'  => ['1234', ['a' => 'a1', 'b' => 'b1', 'c' => 'c1', 'd' => 'd4', 'x' => 'x2', 'y' => 'y3']],
+            '21'    => ['21', ['a' => 'a2', 'b' => 'b2', 'c' => 'c1', 'd' => 'noVal']],
+            '12345' => ['12345', ['a' => 'a1', 'b' => 'b1', 'c' => 'c1', 'd' => 'd4', 'x' => 'x2', 'y' => 'y3']],
+        ];
     }
 
     /**
      * @dataProvider providerTestReadFirstExistingWithStack
      */
-    public function testReadFirstExistingWithStack(Configuration $config, $expected)
+    public function testReadFirstExistingWithStack(Configuration $config, string $expected): void
     {
         $this->assertSame($expected, $config->readFirstExisting('e', 'd', 'c', 'b', 'a'));
     }
 
-    public function providerTestReadFirstExistingWithStack()
+    public function providerTestReadFirstExistingWithStack(): array
     {
-        $cfg1 = new Memory(array('a' => 'a1'));
-        $cfg4 = new Memory(array('a' => 'a4'));
+        $cfg1 = new Memory(['a' => 'a1']);
+        $cfg4 = new Memory(['a' => 'a4']);
 
-        $cfg2 = new Memory(array('a' => 'a2', 'b' => 'b2'));
-        $cfg3 = new Memory(array('a' => 'a3', 'b' => 'b3', 'c' => 'c3'));
+        $cfg2 = new Memory(['a' => 'a2', 'b' => 'b2']);
+        $cfg3 = new Memory(['a' => 'a3', 'b' => 'b3', 'c' => 'c3']);
 
-        return array(
-            '1' => array((new Stacked())->overrideBy($cfg1), 'a1'),
-            '2' => array((new Stacked())->overrideBy($cfg2), 'b2'),
-            '3' => array((new Stacked())->overrideBy($cfg3), 'c3'),
-            '4' => array((new Stacked())->overrideBy($cfg4), 'a4'),
+        return [
+            '1' => [(new Stacked())->overrideBy($cfg1), 'a1'],
+            '2' => [(new Stacked())->overrideBy($cfg2), 'b2'],
+            '3' => [(new Stacked())->overrideBy($cfg3), 'c3'],
+            '4' => [(new Stacked())->overrideBy($cfg4), 'a4'],
 
-            '12' => array((new Stacked())->overrideBy($cfg1)->overrideBy($cfg2), 'b2'),
-            '21' => array((new Stacked())->overrideBy($cfg2)->overrideBy($cfg1), 'b2'),
-            '11' => array((new Stacked())->overrideBy($cfg1)->overrideBy($cfg1), 'a1'),
-            '14' => array((new Stacked())->overrideBy($cfg1)->overrideBy($cfg4), 'a4'),
-            '41' => array((new Stacked())->overrideBy($cfg4)->overrideBy($cfg1), 'a1'),
+            '12' => [(new Stacked())->overrideBy($cfg1)->overrideBy($cfg2), 'b2'],
+            '21' => [(new Stacked())->overrideBy($cfg2)->overrideBy($cfg1), 'b2'],
+            '11' => [(new Stacked())->overrideBy($cfg1)->overrideBy($cfg1), 'a1'],
+            '14' => [(new Stacked())->overrideBy($cfg1)->overrideBy($cfg4), 'a4'],
+            '41' => [(new Stacked())->overrideBy($cfg4)->overrideBy($cfg1), 'a1'],
 
-            '123' => array((new Stacked())->overrideBy($cfg1)->overrideBy($cfg2)->overrideBy($cfg3), 'c3'),
-            '321' => array((new Stacked())->overrideBy($cfg3)->overrideBy($cfg2)->overrideBy($cfg1), 'c3'),
-        );
+            '123' => [(new Stacked())->overrideBy($cfg1)->overrideBy($cfg2)->overrideBy($cfg3), 'c3'],
+            '321' => [(new Stacked())->overrideBy($cfg3)->overrideBy($cfg2)->overrideBy($cfg1), 'c3'],
+        ];
     }
 
     /**
      * @expectedException \Puzzle\Configuration\Exceptions\NotFound
      */
-    public function testGetUnknownValue()
+    public function testGetUnknownValue(): void
     {
-        $cfg1 = new Memory(array('a' => 'a1'));
-        $cfg2 = new Memory(array('a' => 'a2', 'b' => 'b2'));
-        $cfg3 = new Memory(array('a' => 'a3', 'b' => 'b3', 'c' => 'c3'));
+        $cfg1 = new Memory(['a' => 'a1']);
+        $cfg2 = new Memory(['a' => 'a2', 'b' => 'b2']);
+        $cfg3 = new Memory(['a' => 'a3', 'b' => 'b3', 'c' => 'c3']);
 
         $config = (new Stacked())
             ->overrideBy($cfg1)

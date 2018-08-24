@@ -1,32 +1,31 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Puzzle;
 
 interface Configuration
 {
-    const
+    public const
         SEPARATOR = '/';
     
     /**
      * Read value from configuration. Return default value if not found.
      *
-     * @param string $fqn
      * @param mixed $defaultValue
      *
      * @return mixed
      */
-    public function read($fqn, $defaultValue = null);
+    public function read(string $fqn, $defaultValue = null);
     
     /**
      * Read value from configuration. Throw exception if not found.
-     *
-     * @param string $fqn
      *
      * @return mixed
      *
      * @throws \Puzzle\Configuration\Exceptions\NotFound
      */
-    public function readRequired($fqn);
+    public function readRequired(string $fqn);
     
     /**
      * Read value for the first existing given key. Throw exception if not found
@@ -39,14 +38,10 @@ interface Configuration
      *
      * @throws \Puzzle\Configuration\Exceptions\NotFound
      */
-    public function readFirstExisting(/* ... */);
+    public function readFirstExisting(string ...$fqns);
     
     /**
      * Check value existence.
-     *
-     * @param string $fqn
-     *
-     * @return boolean
      */
-    public function exists($fqn);
+    public function exists(string $fqn): bool;
 }

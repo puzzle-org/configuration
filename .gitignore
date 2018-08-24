@@ -6,11 +6,12 @@ composer.lock
 vendor/
 
 #================================================
-# Eclipse files
+# IDE files
 #================================================
 .project
 .buildpath
 .settings/
+.idea/
 
 #================================================
 # Code coverage report

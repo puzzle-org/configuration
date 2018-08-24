@@ -1,8 +1,8 @@
 <?php
 
-namespace Puzzle\Configuration;
+declare(strict_types = 1);
 
-use Puzzle\Configuration;
+namespace Puzzle\Configuration;
 
 class Memory extends AbstractConfiguration
 {
@@ -16,16 +16,18 @@ class Memory extends AbstractConfiguration
         $this->values = $values;
     }
 
-    public function exists($fqn)
+    public function exists(string $fqn): bool
     {
         return array_key_exists($fqn, $this->values);
     }
 
-    protected function getValue($fqn)
+    protected function getValue(string $fqn)
     {
         if(isset($this->values[$fqn]))
         {
             return $this->values[$fqn];
         }
+
+        return null;
     }
 }

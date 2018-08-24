@@ -1,24 +1,18 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Puzzle;
 
 interface ConfigurationSystem
 {
     /**
      * Add a more prioritary configuration to create a fallback system between configurations
-     *
-     * @param Configuration $configuration
-     *
-     * @return self
      */
-    public function overrideBy(Configuration $configuration);
+    public function overrideBy(Configuration $configuration): ConfigurationSystem;
 
     /**
      * Add a less prioritary configuration to create a fallback system between configurations
-     *
-     * @param Configuration $configuration
-     *
-     * @return self
      */
-    public function addBase(Configuration $configuration);
+    public function addBase(Configuration $configuration): ConfigurationSystem;
 }

@@ -1,16 +1,23 @@
 <?php
 
-abstract class AbstractTestCase extends PHPUnit_Framework_TestCase
+declare(strict_types = 1);
+
+namespace Puzzle\Configuration;
+
+use PHPUnit\Framework\TestCase;
+use Puzzle\Configuration;
+
+abstract class AbstractTestCase extends TestCase
 {
-    const
+    private const
         DEFAULT_VALUE = 'default';
 
     protected
         $config;
 
-    abstract protected function setUpConfigurationObject();
+    abstract protected function setUpConfigurationObject(): Configuration;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->config = $this->setUpConfigurationObject();
     }
@@ -18,7 +25,7 @@ abstract class AbstractTestCase extends PHPUnit_Framework_TestCase
     /**
      * @dataProvider providerTestRead
      */
-    public function testRead($fqn, $expected)
+    public function testRead(string $fqn, string $expected): void
     {
         $defaultValue = self::DEFAULT_VALUE;
         $value = $this->config->read($fqn, $defaultValue);
@@ -26,109 +33,109 @@ abstract class AbstractTestCase extends PHPUnit_Framework_TestCase
         $this->assertSame($expected, $value);
     }
 
-    public function providerTestRead()
+    public function providerTestRead(): array
     {
-        return array(
-            array('a/b/c', 'abc'),
-            array('a/b/d', 'abd'),
-            array('b/b/c', 'bbc'),
-            array('d/e/f', 'def'),
-            array('a/bb/c', self::DEFAULT_VALUE),
-            array('g/h/i', self::DEFAULT_VALUE),
-            array('empty/someKey', self::DEFAULT_VALUE),
-            array('commentsOnly/someKey', self::DEFAULT_VALUE),
-            array('notExisting', self::DEFAULT_VALUE),
-        );
+        return [
+            ['a/b/c', 'abc'],
+            ['a/b/d', 'abd'],
+            ['b/b/c', 'bbc'],
+            ['d/e/f', 'def'],
+            ['a/bb/c', self::DEFAULT_VALUE],
+            ['g/h/i', self::DEFAULT_VALUE],
+            ['empty/someKey', self::DEFAULT_VALUE],
+            ['commentsOnly/someKey', self::DEFAULT_VALUE],
+            ['notExisting', self::DEFAULT_VALUE],
+        ];
     }
 
     /**
      * @dataProvider providerTestReadWithoutDefaultValue
      */
-    public function testReadWithoutDefaultValue($fqn, $expected)
+    public function testReadWithoutDefaultValue(string $fqn, ?string $expected): void
     {
         $value = $this->config->read($fqn);
 
         $this->assertSame($expected, $value);
     }
 
-    public function providerTestReadWithoutDefaultValue()
+    public function providerTestReadWithoutDefaultValue(): array
     {
-        return array(
-            array('a/b/c', 'abc'),
-            array('a/b/d', 'abd'),
-            array('b/b/c', 'bbc'),
-            array('d/e/f', 'def'),
-            array('a/bb/c', null),
-            array('g/h/i', null),
-            array('empty/someKey', null),
-            array('commentsOnly/someKey', null),
-            array('notExisting', null),
-        );
+        return [
+            ['a/b/c', 'abc'],
+            ['a/b/d', 'abd'],
+            ['b/b/c', 'bbc'],
+            ['d/e/f', 'def'],
+            ['a/bb/c', null],
+            ['g/h/i', null],
+            ['empty/someKey', null],
+            ['commentsOnly/someKey', null],
+            ['notExisting', null],
+        ];
     }
 
     /**
      * @dataProvider providerTestReadRequired
      */
-    public function testReadRequired($fqn, $expected)
+    public function testReadRequired(string $fqn, string $expected): void
     {
         $value = $this->config->readRequired($fqn);
 
         $this->assertSame($expected, $value);
     }
 
-    public function providerTestReadRequired()
+    public function providerTestReadRequired(): array
     {
-        return array(
-            array('a/b/c', 'abc'),
-            array('a/b/d', 'abd'),
-            array('b/b/c', 'bbc'),
-            array('d/e/f', 'def'),
-        );
+        return [
+            ['a/b/c', 'abc'],
+            ['a/b/d', 'abd'],
+            ['b/b/c', 'bbc'],
+            ['d/e/f', 'def'],
+        ];
     }
 
     /**
      * @dataProvider providerTestReadRequiredWithInvalidFQN
-     * @expectedException Puzzle\Configuration\Exceptions\NotFound
+     * @expectedException \Puzzle\Configuration\Exceptions\NotFound
      */
-    public function testReadRequiredWithInvalidFQN($fqn)
+    public function testReadRequiredWithInvalidFQN(string $fqn): void
     {
-        $value = $this->config->readRequired($fqn);
+        $this->config->readRequired($fqn);
     }
 
-    public function providerTestReadRequiredWithInvalidFQN()
+    public function providerTestReadRequiredWithInvalidFQN(): array
     {
-        return array(
-            array('a/bb/c'),
-            array('g/h/i'),
-            array('empty/someKey', self::DEFAULT_VALUE),
-            array('commentsOnly/someKey', self::DEFAULT_VALUE),
-            array('notExisting', self::DEFAULT_VALUE),
-        );
+        return [
+            ['a/bb/c'],
+            ['g/h/i'],
+            ['empty/someKey', self::DEFAULT_VALUE],
+            ['commentsOnly/someKey', self::DEFAULT_VALUE],
+            ['notExisting', self::DEFAULT_VALUE],
+        ];
     }
 
     /**
      * @dataProvider providerTestReadFirstExisting
      */
-    public function testReadFirstExisting($expected, array $parameters)
+    public function testReadFirstExisting($expected, array $parameters): void
     {
-        $value = call_user_func_array(array($this->config, 'readFirstExisting'), $parameters);
+        $value = $this->config->readFirstExisting(...$parameters);
 
         $this->assertSame($expected, $value);
     }
 
-    public function providerTestReadFirstExisting()
+    public function providerTestReadFirstExisting(): array
     {
-        return array(
-            array('abc', array('a/b/c', 'a/b/d',)),
-            array('abd', array('a/b/d', 'a/b/c',)),
-            array('def', array('x/y/z', 'd/e/f',)),
-            array('bbc', array('x/y/z', 'b/b/c', 'a/b/c')),
-            array('abc', array('x/y/z', 'x/y/z', 'a/b/c')),
-            array('abc', array('x/y/z', 'a/b/x', 'a/b/c')),
-        );
+        return [
+            ['abc', ['a/b/c', 'a/b/d',]],
+            ['abd', ['a/b/d', 'a/b/c',]],
+            ['def', ['x/y/z', 'd/e/f',]],
+            ['bbc', ['x/y/z', 'b/b/c', 'a/b/c']],
+            ['abc', ['x/y/z', 'x/y/z', 'a/b/c']],
+            ['abc', ['x/y/z', 'a/b/x', 'a/b/c']],
+        ];
     }
 
-    public function testReadFirstExistingNominal()
+    public function testReadFirstExistingNominal(): void
     {
         $value = $this->config->readFirstExisting('x/y/z', 'x/y', 'z/yx/', 'b/b/c', 'too/late');
 
@@ -136,17 +143,17 @@ abstract class AbstractTestCase extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Puzzle\Configuration\Exceptions\NotFound
+     * @expectedException \Puzzle\Configuration\Exceptions\NotFound
      */
-    public function testReadFirstExistingNotFound()
+    public function testReadFirstExistingNotFound(): void
     {
         $this->config->readFirstExisting('x/y/z', 'x/y', 'z/yx/');
     }
 
     /**
-     * @expectedException Puzzle\Configuration\Exceptions\NotFound
+     * @expectedException \Puzzle\Configuration\Exceptions\NotFound
      */
-    public function testReadFirstExistingWithoutAnyArgument()
+    public function testReadFirstExistingWithoutAnyArgument(): void
     {
         $this->config->readFirstExisting();
     }

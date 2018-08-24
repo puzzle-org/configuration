@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Puzzle\Configuration;
 
 use Gaufrette\Filesystem;
@@ -15,16 +17,16 @@ class Yaml extends AbstractConfiguration
     {
         parent::__construct();
         
-        $this->cache = array();
+        $this->cache = [];
         $this->storage = $configurationFilesStorage;
     }
     
-    public function exists($fqn)
+    public function exists(string $fqn): bool
     {
         return $this->getValue($fqn) !== null;
     }
 
-    protected function getValue($fqn)
+    protected function getValue(string $fqn)
     {
         $keys = $this->parseDsn($fqn);
         $filename = array_shift($keys);
@@ -41,7 +43,7 @@ class Yaml extends AbstractConfiguration
         return $this->readValue($keys, $config);
     }
     
-    private function getYaml($alias)
+    private function getYaml(string $alias): array
     {
         if(! isset($this->cache[$alias]))
         {
@@ -52,18 +54,18 @@ class Yaml extends AbstractConfiguration
         return $this->cache[$alias];
     }
 
-    private function parseYaml($content)
+    private function parseYaml(string $content): array
     {
         $decodedYaml = \Symfony\Component\Yaml\Yaml::parse($content);
         if(! is_array($decodedYaml))
         {
-            $decodedYaml = array();
+            $decodedYaml = [];
         }
 
         return $decodedYaml;
     }
 
-    private function computeFilename($alias)
+    private function computeFilename(string $alias): string
     {
         return $alias . '.yml';
     }

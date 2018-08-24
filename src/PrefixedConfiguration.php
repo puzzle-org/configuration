@@ -1,8 +1,8 @@
 <?php
 
-namespace Puzzle;
+declare(strict_types = 1);
 
-use Puzzle\Configuration;
+namespace Puzzle;
 
 class PrefixedConfiguration implements Configuration
 {
@@ -10,13 +10,13 @@ class PrefixedConfiguration implements Configuration
         $prefix,
         $configuration;
 
-    public function __construct(Configuration $configuration, $prefix = null)
+    public function __construct(Configuration $configuration, ?string $prefix = null)
     {
         $this->setPrefix($prefix);
         $this->configuration = $configuration;
     }
 
-    public function setPrefix($prefix)
+    public function setPrefix(?string $prefix): self
     {
         if($this->isValidPrefix($prefix))
         {
@@ -26,52 +26,48 @@ class PrefixedConfiguration implements Configuration
         return $this;
     }
 
-    private function isValidPrefix($prefix)
+    private function isValidPrefix(?string $prefix): bool
     {
         if(is_string($prefix))
         {
             $prefix = $this->trimPrefix($prefix);
 
-            return (! empty($prefix));
+            return ! empty($prefix);
         }
 
         return false;
     }
 
-    private function trimPrefix($prefix)
+    private function trimPrefix(string $prefix): string
     {
         return trim($prefix, self::SEPARATOR);
     }
 
-    public function read($fqn, $defaultValue = null)
+    public function read(string $fqn, $defaultValue = null)
     {
         return $this->configuration->read($this->computeFqn($fqn), $defaultValue);
     }
 
-    public function readRequired($fqn)
+    public function readRequired(string $fqn)
     {
         return $this->configuration->readRequired($this->computeFqn($fqn));
     }
 
-    public function readFirstExisting()
+    public function readFirstExisting(string ...$fqns)
     {
-        $keys = func_get_args();
-        $args = array();
+        $fqns = array_map(function(string $fqn): string {
+            return $this->computeFqn($fqn);
+        }, $fqns);
 
-        foreach($keys as $fqn)
-        {
-            $args[] = $this->computeFqn($fqn);
-        }
-
-        return call_user_func_array(array($this->configuration, __FUNCTION__), $args);
+        return $this->configuration->readFirstExisting(...$fqns);
     }
 
-    public function exists($fqn)
+    public function exists(string $fqn): bool
     {
         return $this->configuration->exists($this->computeFqn($fqn));
     }
 
-    private function computeFqn($fqn)
+    private function computeFqn(string $fqn): string
     {
         if($this->prefix !== null)
         {

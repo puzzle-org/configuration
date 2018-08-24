@@ -1,17 +1,22 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Puzzle\Configuration;
 
 abstract class AbstractConfiguration implements \Puzzle\Configuration
 {
-    abstract protected function getValue($fqn);
+    /**
+     * @return mixed
+     */
+    abstract protected function getValue(string $fqn);
 
     public function __construct()
     {
         // Empty constructor to avoid inheritance issues
     }
     
-    public function read($fqn, $defaultValue = null)
+    public function read(string $fqn, $defaultValue = null)
     {
         $value = $defaultValue;
         
@@ -23,23 +28,19 @@ abstract class AbstractConfiguration implements \Puzzle\Configuration
         return $value;
     }
     
-    public function readRequired($fqn)
+    public function readRequired(string $fqn)
     {
         if(!$this->exists($fqn))
         {
             throw new Exceptions\NotFound($fqn);
         }
     
-        $value = $this->getValue($fqn);
-    
-        return $value;
+        return $this->getValue($fqn);
     }
     
-    public function readFirstExisting()
+    public function readFirstExisting(string ...$fqns)
     {
-        $keys = func_get_args();
-        
-        foreach($keys as $fqn)
+        foreach($fqns as $fqn)
         {
             if($this->exists($fqn))
             {
@@ -48,7 +49,7 @@ abstract class AbstractConfiguration implements \Puzzle\Configuration
         }
         
         throw new Exceptions\NotFound(
-            sprintf('[%s]', implode(', ', $keys))
+            sprintf('[%s]', implode(', ', $fqns))
         );
     }
     
@@ -56,27 +57,14 @@ abstract class AbstractConfiguration implements \Puzzle\Configuration
      * Parse the idenfication name of variable or group
      *
      * @example myConfigFilenameWithoutExtension/myRootConfig/myGroup/myVariable
-     *
-     * @param string $fqn
-     *
-     * @return array
      */
-    protected function parseDsn($fqn)
+    protected function parseDsn(string $fqn): array
     {
         return explode(self::SEPARATOR, $fqn);
     }
     
-    /**
-     *
-     *
-     * @param
-     *
-     * @return string
-     */
-    public static function join(/* ... */)
+    public static function join(string ...$parts): string
     {
-        $args = func_get_args();
-    
-        return implode(self::SEPARATOR, $args);
+        return implode(self::SEPARATOR, $parts);
     }
 }

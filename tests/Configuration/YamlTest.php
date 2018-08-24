@@ -1,13 +1,16 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Puzzle\Configuration;
 
 use Gaufrette\Filesystem;
 use Gaufrette\Adapter\InMemory;
+use Puzzle\Configuration;
 
-class YamlTest extends \AbstractTestCase
+class YamlTest extends AbstractTestCase
 {
-    protected function setUpConfigurationObject()
+    protected function setUpConfigurationObject(): Configuration
     {
         $adapter = new InMemory();
 

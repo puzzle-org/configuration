@@ -1,10 +1,14 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Puzzle\Configuration;
 
-class AbstractConfigurationTest extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class AbstractConfigurationTest extends TestCase
 {
-    public function testJoin()
+    public function testJoin(): void
     {
         $this->assertSame('a', AbstractConfiguration::join('a'));
         $this->assertSame('a/b', AbstractConfiguration::join('a', 'b'));

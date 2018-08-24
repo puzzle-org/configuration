@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Puzzle\Configuration;
 
 use Puzzle\Configuration;
@@ -16,12 +18,12 @@ class ArrayMemory extends AbstractConfiguration
         $this->values = $values;
     }
 
-    public function exists($fqn)
+    public function exists(string $fqn): bool
     {
         return $this->getValue($fqn) !== null;
     }
 
-    protected function getValue($fqn)
+    protected function getValue(string $fqn)
     {
         $keys = $this->parseDsn($fqn);
         $config = $this->values;

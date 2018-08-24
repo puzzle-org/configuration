@@ -1,12 +1,15 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Puzzle;
 
+use PHPUnit\Framework\TestCase;
 use Puzzle\Configuration\Memory;
 
-class PrefixedConfigurationTest extends \PHPUnit_Framework_TestCase
+class PrefixedConfigurationTest extends TestCase
 {
-    const
+    private const
         DEFAULT_VALUE = 'default';
 
     private
@@ -27,7 +30,7 @@ class PrefixedConfigurationTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider providerTestRead
      */
-    public function testRead($prefix, $key, $expectedKey)
+    public function testRead(?string $prefix, string $key, string $expectedKey): void
     {
         $prefixed = new PrefixedConfiguration($this->configuration);
 
@@ -42,39 +45,39 @@ class PrefixedConfigurationTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function providerTestRead()
+    public function providerTestRead(): array
     {
-        return array(
+        return [
 
             // tests without prefix
-            array(null, 'a/b/c', 'a/b/c'),
-            array(null, 'd/e/f', 'd/e/f'),
-            array(null, 'c', 'c'),
+            [null, 'a/b/c', 'a/b/c'],
+            [null, 'd/e/f', 'd/e/f'],
+            [null, 'c', 'c'],
 
             // tests with prefix
-            array('a/b', 'c', 'a/b/c'),
-            array('a/b', 'd', 'a/b/d'),
-            array('a/b', 'f', 'a/b/f'),
-            array('a/b', 'b/c', 'a/b/b/c'),
-            array('a/b', 'a/b/c', 'a/b/a/b/c'),
+            ['a/b', 'c', 'a/b/c'],
+            ['a/b', 'd', 'a/b/d'],
+            ['a/b', 'f', 'a/b/f'],
+            ['a/b', 'b/c', 'a/b/b/c'],
+            ['a/b', 'a/b/c', 'a/b/a/b/c'],
 
-            array('d', 'e/f', 'd/e/f'),
-            array('d', 'f', 'd/f'),
-            array('d', 'b/c', 'd/b/c'),
-            array('d', 'a/b/c', 'd/a/b/c'),
+            ['d', 'e/f', 'd/e/f'],
+            ['d', 'f', 'd/f'],
+            ['d', 'b/c', 'd/b/c'],
+            ['d', 'a/b/c', 'd/a/b/c'],
 
             // tests with prefix cleaning issues
-            array('a/b/', 'c', 'a/b/c'),
-            array('a/b/', '/c', 'a/b/c'),
-            array('a/b', '/c', 'a/b/c'),
-            array('a/b///', '///c', 'a/b/c'),
-        );
+            ['a/b/', 'c', 'a/b/c'],
+            ['a/b/', '/c', 'a/b/c'],
+            ['a/b', '/c', 'a/b/c'],
+            ['a/b///', '///c', 'a/b/c'],
+        ];
     }
 
     /**
      * @dataProvider providerTestReadWithInvalidPrefix
      */
-    public function testReadWithInvalidPrefix($prefix)
+    public function testReadWithInvalidPrefix(?string $prefix): void
     {
         $prefixed = new PrefixedConfiguration($this->configuration, $prefix);
 
@@ -87,27 +90,19 @@ class PrefixedConfigurationTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    public function providerTestReadWithInvalidPrefix()
+    public function providerTestReadWithInvalidPrefix(): array
     {
-        return array(
-            array(false),
-            array(true),
-            array(0),
-            array(42),
-            array(''),
-            array('/'),
-            array('///'),
-            array(array()),
-            array(array('pony')),
-            array(function() {}),
-            array(new \stdClass()),
-        );
+        return [
+            [''],
+            ['/'],
+            ['///'],
+        ];
     }
 
     /**
      * @dataProvider providerTestReadRequired
      */
-    public function testReadRequired($key, $expectedkey)
+    public function testReadRequired(string $key, string $expectedkey): void
     {
         $prefixed = new PrefixedConfiguration($this->configuration, 'a/b');
 
@@ -117,34 +112,34 @@ class PrefixedConfigurationTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function providerTestReadRequired()
+    public function providerTestReadRequired(): array
     {
-        return array(
-            array('c', 'a/b/c'),
-            array('d', 'a/b/d'),
-        );
+        return [
+            ['c', 'a/b/c'],
+            ['d', 'a/b/d'],
+        ];
     }
 
     /**
      * @dataProvider providerTestReadRequiredWithInvalidFQN
-     * @expectedException Puzzle\Configuration\Exceptions\NotFound
+     * @expectedException \Puzzle\Configuration\Exceptions\NotFound
      */
-    public function testReadRequiredWithInvalidFQN($fqn)
+    public function testReadRequiredWithInvalidFQN(string $fqn): void
     {
         $prefixed = new PrefixedConfiguration($this->configuration, 'a/b');
 
         $prefixed->readRequired($fqn);
     }
 
-    public function providerTestReadRequiredWithInvalidFQN()
+    public function providerTestReadRequiredWithInvalidFQN(): array
     {
-        return array(
-            array('e'),
-            array('a/b/c'),
-        );
+        return [
+            ['e'],
+            ['a/b/c'],
+        ];
     }
 
-    public function testReadFirstExisting()
+    public function testReadFirstExisting(): void
     {
         $prefixed = new PrefixedConfiguration($this->configuration, 'a/b');
 
@@ -167,7 +162,7 @@ class PrefixedConfigurationTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \Puzzle\Configuration\Exceptions\NotFound
      */
-    public function testReadFirstExistingWithInvalidFqn()
+    public function testReadFirstExistingWithInvalidFqn(): void
     {
         $prefixed = new PrefixedConfiguration($this->configuration, 'a/b');
 
@@ -178,7 +173,7 @@ class PrefixedConfigurationTest extends \PHPUnit_Framework_TestCase
      * Reuse same provider than testRead
      * @dataProvider providerTestRead
      */
-    public function testExists($prefix, $key, $expectedKey)
+    public function testExists(?string $prefix, string $key, string $expectedKey): void
     {
         $prefixed = new PrefixedConfiguration($this->configuration);
 

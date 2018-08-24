@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Puzzle\Configuration;
 
 use Puzzle\Configuration;
@@ -17,7 +19,7 @@ class Stacked extends AbstractConfiguration implements ConfigurationSystem
         $this->stack = new \SplStack();
     }
 
-    protected function getValue($fqn)
+    protected function getValue(string $fqn)
     {
         foreach($this->stack as $config)
         {
@@ -26,9 +28,11 @@ class Stacked extends AbstractConfiguration implements ConfigurationSystem
                 return $config->getValue($fqn);
             }
         }
+
+        return null;
     }
 
-    public function exists($fqn)
+    public function exists(string $fqn): bool
     {
         foreach($this->stack as $config)
         {
@@ -41,14 +45,14 @@ class Stacked extends AbstractConfiguration implements ConfigurationSystem
         return false;
     }
 
-    public function overrideBy(Configuration $configuration)
+    public function overrideBy(Configuration $configuration): ConfigurationSystem
     {
         $this->stack->push($configuration);
 
         return $this;
     }
 
-    public function addBase(Configuration $configuration)
+    public function addBase(Configuration $configuration): ConfigurationSystem
     {
         $this->stack->unshift($configuration);
 

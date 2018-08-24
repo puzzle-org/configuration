@@ -1,12 +1,16 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Puzzle\Configuration;
+
+use Puzzle\Configuration;
 
 require_once __DIR__ . '/AbstractTestCase.php';
 
-class ArrayMemoryTest extends \AbstractTestCase
+class ArrayMemoryTest extends AbstractTestCase
 {
-    protected function setUpConfigurationObject()
+    protected function setUpConfigurationObject(): Configuration
     {
         $values = [
             'a' => [
@@ -30,7 +34,7 @@ class ArrayMemoryTest extends \AbstractTestCase
         return new ArrayMemory($values);
     }
 
-    public function testReadAsArray()
+    public function testReadAsArray(): void
     {
         $values = $this->config->readRequired('a/b');
 
