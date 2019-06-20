@@ -170,4 +170,50 @@ class StackedTest extends AbstractTestCase
 
         $config->readRequired('not_exist');
     }
+
+    /**
+     * @dataProvider providerTestDump
+     */
+    public function testDump(array $expected, Stacked $config, string $fqn): void
+    {
+
+        $this->assertEquals($expected, $config->dump($fqn));
+    }
+
+    public function providerTestDump()
+    {
+        $cfg1 = new Memory(['a' => 'a1', 'b' => 'b1'], 'cfg1');
+        $cfg2 = new Memory(['a' => 'a2', 'b' => null, 'c' => 'c2'], 'cfg2');
+        $cfg3 = new Memory(['a' => 'a3', 'b' => ''], 'cfg3');
+        $cfg4 = new Memory(['a' => 'a4']);
+
+        $config = (new Stacked())
+            ->overrideBy($cfg1)
+            ->overrideBy($cfg2)
+            ->overrideBy($cfg3)
+            ->overrideBy($cfg4);
+
+        return [
+            [
+                'expected' => [3 => 'a4', 'cfg3' => 'a3', 'cfg2' => 'a2', 'cfg1' => 'a1'],
+                'config' => $config,
+                'fqn' => 'a',
+            ],
+            [
+                'expected' => ['cfg3' => '', 'cfg1' => 'b1'],
+                'config' => $config,
+                'fqn' => 'b',
+            ],
+            [
+                'expected' => ['cfg2' => 'c2'],
+                'config' => $config,
+                'fqn' => 'c',
+            ],
+            [
+                'expected' => [],
+                'config' => $config,
+                'fqn' => 'UnexistingKey',
+            ],
+        ];
+    }
 }

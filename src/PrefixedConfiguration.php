@@ -16,6 +16,11 @@ class PrefixedConfiguration implements Configuration
         $this->configuration = $configuration;
     }
 
+    public function id(): string
+    {
+        return '';
+    }
+
     public function setPrefix(?string $prefix): self
     {
         if($this->isValidPrefix($prefix))
@@ -41,6 +46,11 @@ class PrefixedConfiguration implements Configuration
     private function trimPrefix(string $prefix): string
     {
         return trim($prefix, self::SEPARATOR);
+    }
+
+    public function description(): string
+    {
+        return '';
     }
 
     public function read(string $fqn, $defaultValue = null)

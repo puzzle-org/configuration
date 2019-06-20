@@ -14,15 +14,15 @@ class Yaml extends AbstractConfiguration
     private
         $cache,
         $storage;
-        
-    public function __construct(Filesystem $configurationFilesStorage)
+
+    public function __construct(Filesystem $configurationFilesStorage, ?string $id = null)
     {
-        parent::__construct();
-        
+        parent::__construct($id);
+
         $this->cache = [];
         $this->storage = $configurationFilesStorage;
     }
-    
+
     public function exists(string $fqn): bool
     {
         return $this->getValue($fqn) !== null;
@@ -41,10 +41,10 @@ class Yaml extends AbstractConfiguration
         {
             return null;
         }
-        
+
         return $this->readValue($keys, $config);
     }
-    
+
     private function getYaml(string $alias): array
     {
         if(! isset($this->cache[$alias]))
@@ -52,7 +52,7 @@ class Yaml extends AbstractConfiguration
             $fileContent = $this->storage->read($this->computeFilename($alias));
             $this->cache[$alias] = $this->parseYaml($fileContent);
         }
-        
+
         return $this->cache[$alias];
     }
 
@@ -76,21 +76,21 @@ class Yaml extends AbstractConfiguration
     {
         return pathinfo($filename, PATHINFO_FILENAME);
     }
-    
+
     private function readValue(array $keys, array $config)
     {
         while(! empty($keys))
         {
             $key = array_shift($keys);
-            
+
             if(!isset($config[$key]))
             {
                 return null;
             }
-            
+
             $config = $config[$key];
         }
-        
+
         return $config;
     }
 

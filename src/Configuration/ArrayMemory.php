@@ -9,9 +9,9 @@ class ArrayMemory extends AbstractConfiguration
     private
         $values;
 
-    public function __construct(array $values)
+    public function __construct(array $values, ?string $id = null)
     {
-        parent::__construct();
+        parent::__construct($id);
 
         $this->values = $values;
     }
