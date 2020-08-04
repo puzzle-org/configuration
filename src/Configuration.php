@@ -30,9 +30,9 @@ interface Configuration
     /**
      * Read value for the first existing given key. Throw exception if not found
      * 
-     * @param string $fqn
+     * @param string $fqns
      * @param ...
-     * @param string $fqn
+     * @param string $fqns
      *
      * @return mixed
      *
