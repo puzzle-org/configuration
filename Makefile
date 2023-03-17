@@ -15,6 +15,7 @@ endif
 # Includes
 #------------------------------------------------------------------------------
 
+include makefiles/executables.mk
 include makefiles/composer.mk
 include makefiles/whalephant.mk
 include makefiles/phpunit.mk
@@ -24,9 +25,11 @@ include makefiles/phpunit.mk
 #------------------------------------------------------------------------------
 .DEFAULT_GOAL := help
 
+.PHONY: help
 help:
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-25s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
-clean-all: clean clean-whalephant clean-phpunit-dockerfile clean-phpunit-image ## Clean all generated artefacts
+#------------------------------------------------------------------------------
 
-.PHONY: help clean-all
+.PHONY: clean-all
+clean-all: clean-composer clean-whalephant clean-phpunit-dockerfile clean-phpunit-image ## Clean all generated artefacts
