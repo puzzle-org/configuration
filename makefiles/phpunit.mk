@@ -24,6 +24,13 @@ phpunit-coverage: vendor/bin/phpunit create-phpunit-image ## Run unit tests with
 
 #------------------------------------------------------------------------------
 
+# Runs phpunit from the host for CI
+.PHONY: -phpunit-local
+-phpunit-local: vendor/bin/phpunit
+	vendor/bin/phpunit -c phpunit.xml --coverage-clover=coverage.xml
+
+#------------------------------------------------------------------------------
+
 vendor/bin/phpunit: composer-install
 
 create-phpunit-image: docker/images/phpunit/Dockerfile

@@ -17,6 +17,7 @@ endif
 
 include makefiles/executables.mk
 include makefiles/composer.mk
+include makefiles/github.mk
 include makefiles/whalephant.mk
 include makefiles/phpunit.mk
 
