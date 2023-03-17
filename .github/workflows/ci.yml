@@ -18,12 +18,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Run tests
-        run: make ga-run-tests
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-versions }}
 
-      - uses: codecov/codecov-action@v3
+      - name: Run tests
+        run: make ga-run-tests
+
+      - name: Codecov
+        uses: codecov/codecov-action@v3
         with:
           files: ./coverage.xml
           fail_ci_if_error: false # optional (default = false)
