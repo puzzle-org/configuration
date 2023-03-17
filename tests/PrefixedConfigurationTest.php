@@ -15,7 +15,7 @@ class PrefixedConfigurationTest extends TestCase
     private
         $configuration;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $values = array(
             'a/b/c' => 'abc',
@@ -122,11 +122,12 @@ class PrefixedConfigurationTest extends TestCase
 
     /**
      * @dataProvider providerTestReadRequiredWithInvalidFQN
-     * @expectedException \Puzzle\Configuration\Exceptions\NotFound
      */
     public function testReadRequiredWithInvalidFQN(string $fqn): void
     {
         $prefixed = new PrefixedConfiguration($this->configuration, 'a/b');
+
+        $this->expectException(\Puzzle\Configuration\Exceptions\NotFound::class);
 
         $prefixed->readRequired($fqn);
     }
@@ -165,6 +166,8 @@ class PrefixedConfigurationTest extends TestCase
     public function testReadFirstExistingWithInvalidFqn(): void
     {
         $prefixed = new PrefixedConfiguration($this->configuration, 'a/b');
+
+        $this->expectException(\Puzzle\Configuration\Exceptions\NotFound::class);
 
         $prefixed->readFirstExisting('x', 'y', 'z');
     }

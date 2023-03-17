@@ -154,9 +154,6 @@ class StackedTest extends AbstractTestCase
         ];
     }
 
-    /**
-     * @expectedException \Puzzle\Configuration\Exceptions\NotFound
-     */
     public function testGetUnknownValue(): void
     {
         $cfg1 = new Memory(['a' => 'a1']);
@@ -167,6 +164,8 @@ class StackedTest extends AbstractTestCase
             ->overrideBy($cfg1)
             ->overrideBy($cfg2)
             ->overrideBy($cfg3);
+
+        $this->expectException(\Puzzle\Configuration\Exceptions\NotFound::class);
 
         $config->readRequired('not_exist');
     }
