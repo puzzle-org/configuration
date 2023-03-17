@@ -19,6 +19,7 @@ QA
 
 Service | Result
 --- | ---
+**CI** | [![CI](https://github.com/puzzle-org/configuration/actions/workflows/ci.yml/badge.svg)](https://github.com/puzzle-org/configuration/actions/workflows/ci.yml)
 **Scrutinizer** | [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/puzzle-org/configuration/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/puzzle-org/configuration/?branch=master)
 **Code coverage** | [![codecov](https://codecov.io/gh/puzzle-org/configuration/branch/master/graph/badge.svg)](https://codecov.io/gh/puzzle-org/configuration)
 **Packagist** | [![Latest Stable Version](https://poser.pugx.org/puzzle/configuration/v/stable.png)](https://packagist.org/packages/puzzle/configuration) [![Total Downloads](https://poser.pugx.org/puzzle/configuration/downloads.svg)](https://packagist.org/packages/puzzle/configuration)
