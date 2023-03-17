@@ -1,6 +1,7 @@
 Puzzle-configuration ![PHP >= 5.6](https://img.shields.io/badge/php-%3E%3D%205.6-blue.svg)
 ====================
 
+**_PHP 7.x users please use puzzle/configuration 4.x_**
 **_PHP 5.6 users please use puzzle/configuration 3.x_**
 
 Hide configuration implementation behind common interface. 
@@ -18,7 +19,6 @@ QA
 
 Service | Result
 --- | ---
-**Travis CI** (PHP 7.1, 7.2) | [![Build Status](https://travis-ci.org/puzzle-org/configuration.png?branch=master)](https://travis-ci.org/puzzle-org/configuration)
 **Scrutinizer** | [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/puzzle-org/configuration/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/puzzle-org/configuration/?branch=master)
 **Code coverage** | [![codecov](https://codecov.io/gh/puzzle-org/configuration/branch/master/graph/badge.svg)](https://codecov.io/gh/puzzle-org/configuration)
 **Packagist** | [![Latest Stable Version](https://poser.pugx.org/puzzle/configuration/v/stable.png)](https://packagist.org/packages/puzzle/configuration) [![Total Downloads](https://poser.pugx.org/puzzle/configuration/downloads.svg)](https://packagist.org/packages/puzzle/configuration)
@@ -206,6 +206,10 @@ $verbosity = $config->readRequired('verbosity');
 Changelog
 ---------
 
+**4.x --> 5.x**
+
+ - Drop php =< 7.2 support. Minimal version is 7.3.0
+ 
 **3.x --> 4.x**
 
  - Drop php 5.6 & 7.0 support. Minimal version is 7.1.0
