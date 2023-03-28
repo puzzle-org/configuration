@@ -124,10 +124,11 @@ abstract class AbstractTestCase extends TestCase
 
     /**
      * @dataProvider providerTestReadRequiredWithInvalidFQN
-     * @expectedException \Puzzle\Configuration\Exceptions\NotFound
      */
     public function testReadRequiredWithInvalidFQN(string $fqn): void
     {
+        $this->expectException(\Puzzle\Configuration\Exceptions\NotFound::class);
+
         $this->config->readRequired($fqn);
     }
 
@@ -171,19 +172,17 @@ abstract class AbstractTestCase extends TestCase
         $this->assertSame('bbc', $value);
     }
 
-    /**
-     * @expectedException \Puzzle\Configuration\Exceptions\NotFound
-     */
     public function testReadFirstExistingNotFound(): void
     {
+        $this->expectException(\Puzzle\Configuration\Exceptions\NotFound::class);
+
         $this->config->readFirstExisting('x/y/z', 'x/y', 'z/yx/');
     }
 
-    /**
-     * @expectedException \Puzzle\Configuration\Exceptions\NotFound
-     */
     public function testReadFirstExistingWithoutAnyArgument(): void
     {
+        $this->expectException(\Puzzle\Configuration\Exceptions\NotFound::class);
+
         $this->config->readFirstExisting();
     }
 

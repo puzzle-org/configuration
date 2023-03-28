@@ -11,12 +11,12 @@
         "configuration"
     ],
     "require" : {
-        "php" : ">=7.1",
-        "symfony/yaml" : "~3.2|~4.0|~5.0",
+        "php" : ">=8.0",
+        "symfony/yaml" : "~4.0|~5.0|~6.0",
         "knplabs/gaufrette" : "~0.2"
     },
     "require-dev" : {
-        "phpunit/phpunit" : "~7.3.0",
+        "phpunit/phpunit" : "~9.5",
         "puzzle/assert": "1.2.0"
     },
     "autoload" : {
