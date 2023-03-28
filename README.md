@@ -209,7 +209,7 @@ Changelog
 
 **4.x --> 5.x**
 
- - Drop php =< 7.2 support. Minimal version is 7.3.0
+ - Drop php 7 support. Minimal version is 8.0
  
 **3.x --> 4.x**
 
