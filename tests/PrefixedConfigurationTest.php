@@ -4,15 +4,16 @@ declare(strict_types = 1);
 
 namespace Puzzle;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Puzzle\Configuration\Memory;
 
-class PrefixedConfigurationTest extends TestCase
+final class PrefixedConfigurationTest extends TestCase
 {
-    private const
+    private const string
         DEFAULT_VALUE = 'default';
 
-    private
+    private Configuration
         $configuration;
 
     protected function setUp(): void
@@ -27,9 +28,7 @@ class PrefixedConfigurationTest extends TestCase
         $this->configuration = new Memory($values);
     }
 
-    /**
-     * @dataProvider providerTestRead
-     */
+    #[DataProvider('providerTestRead')]
     public function testRead(?string $prefix, string $key, string $expectedKey): void
     {
         $prefixed = new PrefixedConfiguration($this->configuration);
@@ -45,7 +44,7 @@ class PrefixedConfigurationTest extends TestCase
         );
     }
 
-    public function providerTestRead(): array
+    public static function providerTestRead(): array
     {
         return [
 
@@ -74,9 +73,7 @@ class PrefixedConfigurationTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider providerTestReadWithInvalidPrefix
-     */
+    #[DataProvider('providerTestReadWithInvalidPrefix')]
     public function testReadWithInvalidPrefix(?string $prefix): void
     {
         $prefixed = new PrefixedConfiguration($this->configuration, $prefix);
@@ -90,7 +87,7 @@ class PrefixedConfigurationTest extends TestCase
         }
     }
 
-    public function providerTestReadWithInvalidPrefix(): array
+    public static function providerTestReadWithInvalidPrefix(): array
     {
         return [
             [''],
@@ -99,9 +96,7 @@ class PrefixedConfigurationTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider providerTestReadRequired
-     */
+    #[DataProvider('providerTestReadRequired')]
     public function testReadRequired(string $key, string $expectedkey): void
     {
         $prefixed = new PrefixedConfiguration($this->configuration, 'a/b');
@@ -112,7 +107,7 @@ class PrefixedConfigurationTest extends TestCase
         );
     }
 
-    public function providerTestReadRequired(): array
+    public static function providerTestReadRequired(): array
     {
         return [
             ['c', 'a/b/c'],
@@ -120,9 +115,7 @@ class PrefixedConfigurationTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider providerTestReadRequiredWithInvalidFQN
-     */
+    #[DataProvider('providerTestReadRequiredWithInvalidFQN')]
     public function testReadRequiredWithInvalidFQN(string $fqn): void
     {
         $prefixed = new PrefixedConfiguration($this->configuration, 'a/b');
@@ -132,7 +125,7 @@ class PrefixedConfigurationTest extends TestCase
         $prefixed->readRequired($fqn);
     }
 
-    public function providerTestReadRequiredWithInvalidFQN(): array
+    public static function providerTestReadRequiredWithInvalidFQN(): array
     {
         return [
             ['e'],
@@ -144,25 +137,22 @@ class PrefixedConfigurationTest extends TestCase
     {
         $prefixed = new PrefixedConfiguration($this->configuration, 'a/b');
 
-        $this->assertSame(
+        self::assertSame(
             $this->configuration->readFirstExisting('a/b/g', 'a/b/f', 'a/b/e', 'a/b/d', 'a/b/c', 'a/b/b', 'a/b/a'),
             $prefixed->readFirstExisting('g', 'f', 'e', 'd', 'c', 'b', 'a')
         );
 
-        $this->assertSame(
+        self::assertSame(
             $this->configuration->readFirstExisting('a/b/d', 'a/b/c', 'a/b/b', 'a/b/a'),
             $prefixed->readFirstExisting('d', 'c', 'b', 'a')
         );
 
-        $this->assertSame(
+        self::assertSame(
             $this->configuration->readFirstExisting('a/b/g', 'a/b/c'),
             $prefixed->readFirstExisting('g', 'c')
         );
     }
 
-    /**
-     * @expectedException \Puzzle\Configuration\Exceptions\NotFound
-     */
     public function testReadFirstExistingWithInvalidFqn(): void
     {
         $prefixed = new PrefixedConfiguration($this->configuration, 'a/b');
@@ -172,10 +162,8 @@ class PrefixedConfigurationTest extends TestCase
         $prefixed->readFirstExisting('x', 'y', 'z');
     }
 
-    /**
-     * Reuse same provider than testRead
-     * @dataProvider providerTestRead
-     */
+    // Reuse same provider than testRead
+    #[DataProvider('providerTestRead')]
     public function testExists(?string $prefix, string $key, string $expectedKey): void
     {
         $prefixed = new PrefixedConfiguration($this->configuration);
@@ -185,7 +173,7 @@ class PrefixedConfigurationTest extends TestCase
             $prefixed->setPrefix($prefix);
         }
 
-        $this->assertSame(
+        self::assertSame(
             $this->configuration->exists($expectedKey),
             $prefixed->exists($key)
         );

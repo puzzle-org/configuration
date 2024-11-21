@@ -8,7 +8,7 @@ use Puzzle\Configuration;
 
 require_once __DIR__ . '/AbstractTestCase.php';
 
-class ArrayMemoryTest extends AbstractTestCase
+final class ArrayMemoryTest extends AbstractTestCase
 {
     protected function setUpConfigurationObject(): Configuration
     {
@@ -50,6 +50,6 @@ class ArrayMemoryTest extends AbstractTestCase
             'd'  => 'abd',
         ];
 
-        $this->assertSame($expected, $values);
+        self::assertSame($expected, $values);
     }
 }

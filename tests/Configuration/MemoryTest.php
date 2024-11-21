@@ -4,18 +4,16 @@ declare(strict_types = 1);
 
 namespace Puzzle\Configuration;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Puzzle\Configuration;
 
 require_once __DIR__ . '/AbstractTestCase.php';
 
-class MemoryTest extends AbstractTestCase
+final class MemoryTest extends AbstractTestCase
 {
-    private
-        $values;
-
     protected function setUpConfigurationObject(): Configuration
     {
-        $this->values = [
+        $values = [
             'a/b/c' => 'abc',
             'a/b/d' => 'abd',
             'a/x/y' => 'axy',
@@ -25,15 +23,13 @@ class MemoryTest extends AbstractTestCase
             'locale/back' => ['de', 'fr', 'it'],
         ];
 
-        return new Memory($this->values);
+        return new Memory($values);
     }
 
-    /**
-     * @dataProvider providerTestReadArray
-     */
+    #[DataProvider('providerTestReadArray')]
     public function testReadArray(string $fqn, array $expected): void
     {
         // s/o for this impl
-        $this->assertTrue(true);
+        self::assertTrue(true);
     }
 }

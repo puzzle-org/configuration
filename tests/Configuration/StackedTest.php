@@ -4,11 +4,12 @@ declare(strict_types = 1);
 
 namespace Puzzle\Configuration;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Puzzle\Configuration;
 
 require_once __DIR__ . '/AbstractTestCase.php';
 
-class StackedTest extends AbstractTestCase
+final class StackedTest extends AbstractTestCase
 {
     protected function setUpConfigurationObject(): Configuration
     {
@@ -32,27 +33,23 @@ class StackedTest extends AbstractTestCase
         return $config;
     }
 
-    /**
-     * @dataProvider providerTestReadArray
-     */
+    #[DataProvider('providerTestReadArray')]
     public function testReadArray(string $fqn, array $expected): void
     {
         // s/o for this impl (use Memory impl)
-        $this->assertTrue(true);
+        self::assertTrue(true);
     }
 
-    /**
-     * @dataProvider providerTestOverride
-     */
+    #[DataProvider('providerTestOverride')]
     public function testOverride(Configuration $config, array $expectedValues): void
     {
         foreach($expectedValues as $key => $expected)
         {
-            $this->assertSame($expected, $config->read($key, 'noVal'));
+            self::assertSame($expected, $config->read($key, 'noVal'));
         }
     }
 
-    public function providerTestOverride(): array
+    public static function providerTestOverride(): array
     {
         $cfg1 = new Memory(['a' => 'a1', 'b' => 'b1', 'c' => 'c1']);
         $cfg2 = new Memory(['a' => 'a2', 'b' => 'b2']);
@@ -79,10 +76,8 @@ class StackedTest extends AbstractTestCase
         ];
     }
 
-    /**
-     * @dataProvider providerTestAddBase
-     */
-     public function testAddBase(string $configKey, array $expectedValues): void
+    #[DataProvider('providerTestAddBase')]
+    public function testAddBase(string $configKey, array $expectedValues): void
     {
         $cfg1 = new Memory(['a' => 'a1', 'b' => 'b1', 'c' => 'c1']);
         $cfg2 = new Memory(['a' => 'a2', 'b' => 'b2', 'x' => 'x2']);
@@ -104,11 +99,11 @@ class StackedTest extends AbstractTestCase
 
         foreach($expectedValues as $key => $expected)
         {
-            $this->assertSame($expected, $config->read($key, 'noVal'));
+            self::assertSame($expected, $config->read($key, 'noVal'));
         }
     }
 
-    public function providerTestAddBase(): array
+    public static function providerTestAddBase(): array
     {
         return [
             'empty' => ['empty', ['a' => 'noVal', 'b' => 'noVal', 'c' => 'noVal', 'd' => 'noVal']],
@@ -121,15 +116,13 @@ class StackedTest extends AbstractTestCase
         ];
     }
 
-    /**
-     * @dataProvider providerTestReadFirstExistingWithStack
-     */
+    #[DataProvider('providerTestReadFirstExistingWithStack')]
     public function testReadFirstExistingWithStack(Configuration $config, string $expected): void
     {
-        $this->assertSame($expected, $config->readFirstExisting('e', 'd', 'c', 'b', 'a'));
+        self::assertSame($expected, $config->readFirstExisting('e', 'd', 'c', 'b', 'a'));
     }
 
-    public function providerTestReadFirstExistingWithStack(): array
+    public static function providerTestReadFirstExistingWithStack(): array
     {
         $cfg1 = new Memory(['a' => 'a1']);
         $cfg4 = new Memory(['a' => 'a4']);
