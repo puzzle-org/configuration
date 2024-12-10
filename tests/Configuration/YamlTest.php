@@ -4,9 +4,10 @@ declare(strict_types = 1);
 
 namespace Puzzle\Configuration;
 
-use Gaufrette\Filesystem;
 use Gaufrette\Adapter\InMemory;
 use Puzzle\Configuration;
+use Puzzle\Configuration\FS\Adapters\GaufretteAdapter;
+use Gaufrette\Filesystem;
 
 class YamlTest extends AbstractTestCase
 {
@@ -64,6 +65,9 @@ back:
 YAML;
         $adapter->write('locale.yml', $content);
 
-        return new Yaml(new Filesystem($adapter));
+        return new Yaml(
+            new GaufretteAdapter(
+                new Filesystem($adapter)
+        ));
     }
 }

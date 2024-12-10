@@ -4,8 +4,8 @@ declare(strict_types = 1);
 
 namespace Puzzle\Configuration;
 
-use Gaufrette\Filesystem;
-use Gaufrette\Exception\FileNotFound;
+use Puzzle\Configuration\Exceptions\FileNotFound;
+use Puzzle\Configuration\FS\Filesystem;
 
 class Yaml extends AbstractConfiguration
 {
