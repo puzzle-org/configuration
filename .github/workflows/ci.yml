@@ -25,10 +25,3 @@ jobs:
 
       - name: Run tests
         run: make ga-run-tests
-
-      - name: Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          files: ./coverage.xml
-          fail_ci_if_error: false # optional (default = false)
-          verbose: true # optional (default = false)

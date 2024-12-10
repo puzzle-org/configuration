@@ -1,9 +1,6 @@
 Puzzle-configuration ![PHP >= 5.6](https://img.shields.io/badge/php-%3E%3D%205.6-blue.svg)
 ====================
 
-**_PHP 7.x users please use puzzle/configuration 4.x_**
-**_PHP 5.6 users please use puzzle/configuration 3.x_**
-
 Hide configuration implementation behind common interface. 
 
 Some advantages :
@@ -15,13 +12,10 @@ Some advantages :
 QA
 --
 
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/635b04b7-6238-4200-8526-72766767fd22/big.png)](https://insight.sensiolabs.com/projects/635b04b7-6238-4200-8526-72766767fd22)
 
 Service | Result
 --- | ---
 **CI** | [![CI](https://github.com/puzzle-org/configuration/actions/workflows/ci.yml/badge.svg)](https://github.com/puzzle-org/configuration/actions/workflows/ci.yml)
-**Scrutinizer** | [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/puzzle-org/configuration/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/puzzle-org/configuration/?branch=master)
-**Code coverage** | [![codecov](https://codecov.io/gh/puzzle-org/configuration/branch/master/graph/badge.svg)](https://codecov.io/gh/puzzle-org/configuration)
 **Packagist** | [![Latest Stable Version](https://poser.pugx.org/puzzle/configuration/v/stable.png)](https://packagist.org/packages/puzzle/configuration) [![Total Downloads](https://poser.pugx.org/puzzle/configuration/downloads.svg)](https://packagist.org/packages/puzzle/configuration)
 
 Installation
@@ -30,10 +24,16 @@ Use composer :
 ```json
 {
     "require": {
-            "puzzle/configuration" : "~4.0"
+            "puzzle/configuration" : "~8.3"
     }
 }
 ```
+
+_PHP 8.0 & 8.1 users please use puzzle/configuration 5.x_
+
+_PHP 7.x users please use puzzle/configuration 4.x_
+
+_PHP 5.6 users please use puzzle/configuration 3.x_
 
 Documentation
 -------------
@@ -206,6 +206,12 @@ $verbosity = $config->readRequired('verbosity');
 
 Changelog
 ---------
+
+**5.x --> 8.3**
+
+- Drop php 8.0 & 8.1 support. Minimal version is 8.3
+- Version names are now match the PHP version as the library does not need to functionaly evolve anymore
+- Get rid of Gaufrette. Own interface is provided, please implements it. A Gaufrette adapter is provided for smooth migration
 
 **4.x --> 5.x**
 
