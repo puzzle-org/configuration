@@ -5,3 +5,4 @@ extensions:
     - xdebug
 ini:
     - "error_reporting = E_ALL;"
+    - "xdebug.mode=coverage"
