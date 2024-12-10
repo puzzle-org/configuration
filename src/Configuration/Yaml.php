@@ -4,15 +4,17 @@ declare(strict_types = 1);
 
 namespace Puzzle\Configuration;
 
-use Gaufrette\Filesystem;
-use Gaufrette\Exception\FileNotFound;
+use Puzzle\Configuration\Exceptions\FileNotFound;
+use Puzzle\Configuration\FS\Filesystem;
 
 class Yaml extends AbstractConfiguration
 {
-    private const EXTENSION = 'yml';
+    private const string
+        EXTENSION = 'yml';
 
-    private
-        $cache,
+    private array
+        $cache;
+    private Filesystem
         $storage;
         
     public function __construct(Filesystem $configurationFilesStorage)
@@ -28,7 +30,7 @@ class Yaml extends AbstractConfiguration
         return $this->getValue($fqn) !== null;
     }
 
-    protected function getValue(string $fqn)
+    protected function getValue(string $fqn): mixed
     {
         $keys = $this->parseDsn($fqn);
         $filename = array_shift($keys);
@@ -37,7 +39,7 @@ class Yaml extends AbstractConfiguration
         {
             $config = $this->getYaml($filename);
         }
-        catch(FileNotFound $e)
+        catch(FileNotFound)
         {
             return null;
         }

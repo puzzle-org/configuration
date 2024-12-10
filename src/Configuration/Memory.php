@@ -6,7 +6,7 @@ namespace Puzzle\Configuration;
 
 class Memory extends AbstractConfiguration
 {
-    private
+    private array
         $values;
 
     public function __construct(array $values)
@@ -21,7 +21,7 @@ class Memory extends AbstractConfiguration
         return array_key_exists($fqn, $this->values);
     }
 
-    protected function getValue(string $fqn)
+    protected function getValue(string $fqn): mixed
     {
         if(isset($this->values[$fqn]))
         {

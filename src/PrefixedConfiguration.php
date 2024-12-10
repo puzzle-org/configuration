@@ -6,12 +6,14 @@ namespace Puzzle;
 
 class PrefixedConfiguration implements Configuration
 {
-    private
-        $prefix,
+    private ?string
+        $prefix;
+    private Configuration
         $configuration;
 
     public function __construct(Configuration $configuration, ?string $prefix = null)
     {
+        $this->prefix = null;
         $this->setPrefix($prefix);
         $this->configuration = $configuration;
     }
@@ -43,17 +45,17 @@ class PrefixedConfiguration implements Configuration
         return trim($prefix, self::SEPARATOR);
     }
 
-    public function read(string $fqn, $defaultValue = null)
+    public function read(string $fqn, mixed $defaultValue = null): mixed
     {
         return $this->configuration->read($this->computeFqn($fqn), $defaultValue);
     }
 
-    public function readRequired(string $fqn)
+    public function readRequired(string $fqn): mixed
     {
         return $this->configuration->readRequired($this->computeFqn($fqn));
     }
 
-    public function readFirstExisting(string ...$fqns)
+    public function readFirstExisting(string ...$fqns): mixed
     {
         $fqns = array_map(function(string $fqn): string {
             return $this->computeFqn($fqn);

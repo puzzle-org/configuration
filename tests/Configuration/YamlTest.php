@@ -4,15 +4,19 @@ declare(strict_types = 1);
 
 namespace Puzzle\Configuration;
 
-use Gaufrette\Filesystem;
-use Gaufrette\Adapter\InMemory;
 use Puzzle\Configuration;
+use Puzzle\Configuration\Gaufrette\Memory;
+use Puzzle\Configuration\FS\Adapters\GaufretteAdapter;
+use Gaufrette\Filesystem;
+
+// Patch Gaufrette to avoid PHP Deprecations (explicit nullable argument with php 8.4)
+require_once __DIR__ . '/Gaufrette/Memory.php';
 
 class YamlTest extends AbstractTestCase
 {
     protected function setUpConfigurationObject(): Configuration
     {
-        $adapter = new InMemory();
+        $adapter = new Memory();
 
         $content = <<<YAML
 b:
@@ -64,6 +68,9 @@ back:
 YAML;
         $adapter->write('locale.yml', $content);
 
-        return new Yaml(new Filesystem($adapter));
+        return new Yaml(
+            new GaufretteAdapter(
+                new Filesystem($adapter)
+        ));
     }
 }

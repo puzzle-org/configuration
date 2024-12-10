@@ -9,7 +9,7 @@ use Puzzle\ConfigurationSystem;
 
 class Stacked extends AbstractConfiguration implements ConfigurationSystem
 {
-    private
+    private \SplStack
         $stack;
 
     public function __construct()
@@ -19,7 +19,7 @@ class Stacked extends AbstractConfiguration implements ConfigurationSystem
         $this->stack = new \SplStack();
     }
 
-    protected function getValue(string $fqn)
+    protected function getValue(string $fqn): mixed
     {
         foreach($this->stack as $config)
         {

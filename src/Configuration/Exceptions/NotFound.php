@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace Puzzle\Configuration\Exceptions;
 
-class NotFound extends \Exception
+class NotFound extends ConfigurationException
 {
     public function __construct(string $fqn)
     {

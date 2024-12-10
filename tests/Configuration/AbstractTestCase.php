@@ -4,18 +4,20 @@ declare(strict_types = 1);
 
 namespace Puzzle\Configuration;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Puzzle\Assert\ArrayRelated;
 use Puzzle\Configuration;
+use Puzzle\Configuration\Exceptions\NotFound;
 
 abstract class AbstractTestCase extends TestCase
 {
     use ArrayRelated;
 
-    private const
+    private const string
         DEFAULT_VALUE = 'default';
 
-    protected
+    protected Configuration
         $config;
 
     abstract protected function setUpConfigurationObject(): Configuration;
@@ -25,17 +27,15 @@ abstract class AbstractTestCase extends TestCase
         $this->config = $this->setUpConfigurationObject();
     }
 
-    /**
-     * @dataProvider providerTestRead
-     */
+     #[DataProvider('providerTestRead')]
     public function testRead(string $fqn, string $expected): void
     {
         $value = $this->config->read($fqn, self::DEFAULT_VALUE);
 
-        $this->assertSame($expected, $value);
+        self::assertSame($expected, $value);
     }
 
-    public function providerTestRead(): array
+    public static function providerTestRead(): array
     {
         return [
             ['a/b/c', 'abc'],
@@ -51,9 +51,7 @@ abstract class AbstractTestCase extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider providerTestReadArray
-     */
+     #[DataProvider('providerTestReadArray')]
     public function testReadArray(string $fqn, array $expected): void
     {
         $value = $this->config->readRequired($fqn);
@@ -61,7 +59,7 @@ abstract class AbstractTestCase extends TestCase
         $this->assertSameArrayExceptOrder($expected, $value);
     }
 
-    public function providerTestReadArray(): array
+    public static function providerTestReadArray(): array
     {
         return [
             ['a/b', ['c' => 'abc', 'd' => 'abd']],
@@ -77,17 +75,15 @@ abstract class AbstractTestCase extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider providerTestReadWithoutDefaultValue
-     */
+    #[DataProvider('providerTestReadWithoutDefaultValue')]
     public function testReadWithoutDefaultValue(string $fqn, ?string $expected): void
     {
         $value = $this->config->read($fqn);
 
-        $this->assertSame($expected, $value);
+        self::assertSame($expected, $value);
     }
 
-    public function providerTestReadWithoutDefaultValue(): array
+    public static function providerTestReadWithoutDefaultValue(): array
     {
         return [
             ['a/b/c', 'abc'],
@@ -102,17 +98,15 @@ abstract class AbstractTestCase extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider providerTestReadRequired
-     */
+    #[DataProvider('providerTestReadRequired')]
     public function testReadRequired(string $fqn, string $expected): void
     {
         $value = $this->config->readRequired($fqn);
 
-        $this->assertSame($expected, $value);
+        self::assertSame($expected, $value);
     }
 
-    public function providerTestReadRequired(): array
+    public static function providerTestReadRequired(): array
     {
         return [
             ['a/b/c', 'abc'],
@@ -122,17 +116,14 @@ abstract class AbstractTestCase extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider providerTestReadRequiredWithInvalidFQN
-     */
+    #[DataProvider('providerTestReadRequiredWithInvalidFQN')]
     public function testReadRequiredWithInvalidFQN(string $fqn): void
     {
-        $this->expectException(\Puzzle\Configuration\Exceptions\NotFound::class);
-
+        $this->expectException(NotFound::class);
         $this->config->readRequired($fqn);
     }
 
-    public function providerTestReadRequiredWithInvalidFQN(): array
+    public static function providerTestReadRequiredWithInvalidFQN(): array
     {
         return [
             ['a/bb/c'],
@@ -143,17 +134,15 @@ abstract class AbstractTestCase extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider providerTestReadFirstExisting
-     */
+    #[DataProvider('providerTestReadFirstExisting')]
     public function testReadFirstExisting($expected, array $parameters): void
     {
         $value = $this->config->readFirstExisting(...$parameters);
 
-        $this->assertSame($expected, $value);
+        self::assertSame($expected, $value);
     }
 
-    public function providerTestReadFirstExisting(): array
+    public static function providerTestReadFirstExisting(): array
     {
         return [
             ['abc', ['a/b/c', 'a/b/d',]],
@@ -169,7 +158,7 @@ abstract class AbstractTestCase extends TestCase
     {
         $value = $this->config->readFirstExisting('x/y/z', 'x/y', 'z/yx/', 'b/b/c', 'too/late');
 
-        $this->assertSame('bbc', $value);
+        self::assertSame('bbc', $value);
     }
 
     public function testReadFirstExistingNotFound(): void
@@ -200,6 +189,6 @@ abstract class AbstractTestCase extends TestCase
             'locale/bacl' => [
                 'de', 'fr', 'it'
             ]
-        ], $this->config->all());
+        ], iterator_to_array($this->config->all()));
     }
 }
