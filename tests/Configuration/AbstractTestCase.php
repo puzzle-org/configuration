@@ -8,6 +8,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Puzzle\Assert\ArrayRelated;
 use Puzzle\Configuration;
+use Puzzle\Configuration\Exceptions\NotFound;
 
 abstract class AbstractTestCase extends TestCase
 {
@@ -118,8 +119,7 @@ abstract class AbstractTestCase extends TestCase
     #[DataProvider('providerTestReadRequiredWithInvalidFQN')]
     public function testReadRequiredWithInvalidFQN(string $fqn): void
     {
-        $this->expectException(\Puzzle\Configuration\Exceptions\NotFound::class);
-
+        $this->expectException(NotFound::class);
         $this->config->readRequired($fqn);
     }
 
@@ -189,6 +189,6 @@ abstract class AbstractTestCase extends TestCase
             'locale/bacl' => [
                 'de', 'fr', 'it'
             ]
-        ], $this->config->all());
+        ], iterator_to_array($this->config->all()));
     }
 }

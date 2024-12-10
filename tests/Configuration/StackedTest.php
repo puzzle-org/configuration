@@ -158,7 +158,7 @@ final class StackedTest extends AbstractTestCase
             ->overrideBy($cfg2)
             ->overrideBy($cfg3);
 
-        $this->expectException(\Puzzle\Configuration\Exceptions\NotFound::class);
+        $this->expectException(Configuration\Exceptions\NotFound::class);
 
         $config->readRequired('not_exist');
     }

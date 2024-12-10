@@ -6,7 +6,7 @@ namespace Puzzle\Configuration;
 
 class ArrayMemory extends AbstractConfiguration
 {
-    private
+    private array
         $values;
 
     public function __construct(array $values)
@@ -21,7 +21,7 @@ class ArrayMemory extends AbstractConfiguration
         return $this->getValue($fqn) !== null;
     }
 
-    protected function getValue(string $fqn)
+    protected function getValue(string $fqn): mixed
     {
         $keys = $this->parseDsn($fqn);
         $config = $this->values;

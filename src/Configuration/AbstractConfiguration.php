@@ -6,17 +6,14 @@ namespace Puzzle\Configuration;
 
 abstract class AbstractConfiguration implements \Puzzle\Configuration
 {
-    /**
-     * @return mixed
-     */
-    abstract protected function getValue(string $fqn);
+    abstract protected function getValue(string $fqn): mixed;
 
     public function __construct()
     {
         // Empty constructor to avoid inheritance issues
     }
     
-    public function read(string $fqn, $defaultValue = null)
+    public function read(string $fqn, mixed $defaultValue = null): mixed
     {
         $value = $defaultValue;
         
@@ -28,7 +25,7 @@ abstract class AbstractConfiguration implements \Puzzle\Configuration
         return $value;
     }
     
-    public function readRequired(string $fqn)
+    public function readRequired(string $fqn): mixed
     {
         if(!$this->exists($fqn))
         {
@@ -38,7 +35,7 @@ abstract class AbstractConfiguration implements \Puzzle\Configuration
         return $this->getValue($fqn);
     }
     
-    public function readFirstExisting(string ...$fqns)
+    public function readFirstExisting(string ...$fqns): mixed
     {
         foreach($fqns as $fqn)
         {

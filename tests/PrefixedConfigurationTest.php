@@ -6,6 +6,7 @@ namespace Puzzle;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use Puzzle\Configuration\Exceptions\NotFound;
 use Puzzle\Configuration\Memory;
 
 final class PrefixedConfigurationTest extends TestCase
@@ -38,7 +39,7 @@ final class PrefixedConfigurationTest extends TestCase
             $prefixed->setPrefix($prefix);
         }
 
-        $this->assertSame(
+        self::assertSame(
             $this->configuration->read($expectedKey, self::DEFAULT_VALUE),
             $prefixed->read($key, self::DEFAULT_VALUE)
         );
@@ -80,7 +81,7 @@ final class PrefixedConfigurationTest extends TestCase
 
         foreach(array('a/b/c', 'c') as $key)
         {
-            $this->assertSame(
+            self::assertSame(
                 $this->configuration->read($key, self::DEFAULT_VALUE),
                 $prefixed->read($key, self::DEFAULT_VALUE)
             );
@@ -101,7 +102,7 @@ final class PrefixedConfigurationTest extends TestCase
     {
         $prefixed = new PrefixedConfiguration($this->configuration, 'a/b');
 
-        $this->assertSame(
+        self::assertSame(
             $this->configuration->readRequired($expectedkey),
             $prefixed->readRequired($key)
         );
@@ -120,7 +121,7 @@ final class PrefixedConfigurationTest extends TestCase
     {
         $prefixed = new PrefixedConfiguration($this->configuration, 'a/b');
 
-        $this->expectException(\Puzzle\Configuration\Exceptions\NotFound::class);
+        $this->expectException(NotFound::class);
 
         $prefixed->readRequired($fqn);
     }
@@ -157,7 +158,7 @@ final class PrefixedConfigurationTest extends TestCase
     {
         $prefixed = new PrefixedConfiguration($this->configuration, 'a/b');
 
-        $this->expectException(\Puzzle\Configuration\Exceptions\NotFound::class);
+        $this->expectException(NotFound::class);
 
         $prefixed->readFirstExisting('x', 'y', 'z');
     }
