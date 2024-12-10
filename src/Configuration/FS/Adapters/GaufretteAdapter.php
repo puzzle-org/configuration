@@ -7,7 +7,7 @@ namespace Puzzle\Configuration\FS\Adapters;
 use Puzzle\Configuration\FS\Filesystem;
 use \Puzzle\Configuration\Exceptions\FileNotFound;
 
-final class GaufretteAdapter implements Filesystem
+final readonly class GaufretteAdapter implements Filesystem
 {
     private \Gaufrette\Filesystem
         $fs;
@@ -21,7 +21,9 @@ final class GaufretteAdapter implements Filesystem
     {
         try
         {
-            return $this->fs->read($key);
+            // @ mandatory because of Gaufrette lack of maintenance
+            // Without @, it triggers PHP deprecation because of implicit nullable argument while throwing FileNotFound exception
+            return @$this->fs->read($key);
         }
         catch(\Gaufrette\Exception\FileNotFound)
         {
